@@ -1,6 +1,8 @@
 import Head from 'next/head';
 
-import { Wrapper } from '../styles/pages/Home';
+import logo from '../docs/resources/logo.jpg';
+
+import { Wrapper, Header } from '../styles/pages/Home';
 
 export default function Home() {
   return (
@@ -10,8 +12,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Meme Generator</h1>
-      <p>Know Your Meme</p>
+      <main>
+        <Header>
+          <img src={logo} alt="Meme Generator Logo" />
+
+          <div>
+            <h1>Meme Generator</h1>
+          </div>
+        </Header>
+      </main>
     </Wrapper>
   );
 }

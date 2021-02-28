@@ -7,16 +7,25 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
 
-  h1 {
-    font-size: 54px;
-    color: ${props => props.theme.colors.primary};
-    margin-top: 40px;
+export const Header = styled.header`
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 5.5rem;
+    height: auto;
+    border-radius: 20px;
   }
 
-  p {
-    margin-top: 24px;
-    font-size: 24px;
-    line-height: 32px;
+  div {
+    margin-left: 1rem;
+
+    h1 {
+      font-family: Bangers;
+      font-size: 2.5rem;
+      color: ${props => props.theme.colors.black};
+    }
   }
 `;
