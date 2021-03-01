@@ -79,6 +79,10 @@ export default function Home({ memes }) {
             <Button type="button" onClick={handleReset}>
               Create another meme
             </Button>
+
+            <a href={generatedMeme} target="blank" download>
+              <Button type="button">Download</Button>
+            </a>
           </div>
         )}
 

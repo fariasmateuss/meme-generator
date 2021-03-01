@@ -106,4 +106,8 @@ export const Button = styled.button`
   &:hover {
     background: ${props => shade(0.2, props.theme.colors.emerald)};
   }
+
+  &:nth-child(2) {
+    margin: 0.62rem 0 0.62rem 0;
+  }
 `;
