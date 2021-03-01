@@ -17,7 +17,7 @@ export const Header = styled.header`
   img {
     width: 5.5rem;
     height: auto;
-    border-radius: 20px;
+    border-radius: 1.25rem;
   }
 
   div {
@@ -33,34 +33,39 @@ export const Header = styled.header`
 
 export const Card = styled.div`
   background: ${props => props.theme.colors.white};
-  max-width: 430px;
+  max-width: 26.85rem;
   width: 100%;
-  padding: 20px;
-  margin-top: 30px;
-  border-radius: 8px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+  padding: 1.25rem;
+  margin-top: 1.9rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 6px 0.62rem 0 rgba(0, 0, 0, 0.2);
+
+  .thumbnail {
+    width: 24.3rem;
+    height: auto;
+  }
 
   h2 {
-    font-size: 22px;
+    font-size: 1.35rem;
     color: #24292e;
-    margin-bottom: 10px;
+    margin-bottom: 0.6rem;
   }
 `;
 
 export const Templates = styled.div`
   max-width: 100%;
-  height: 90px;
+  height: 7rem;
   background: ${props => props.theme.colors.background};
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow-y: auto;
   display: flex;
   align-items: center;
-  padding: 0 15px;
-  margin-bottom: 30px;
+  padding: 0 0.35rem;
+  margin-bottom: 1.5rem;
 
   button {
     background: transparent;
-    margin-right: 10px;
+    margin-right: 0.6rem;
     border: 2px solid transparent;
 
     &.selected {
@@ -68,8 +73,8 @@ export const Templates = styled.div`
     }
 
     img {
-      width: 53px;
-      height: 53px;
+      width: 5rem;
+      height: 5rem;
     }
   }
 `;
@@ -77,25 +82,25 @@ export const Templates = styled.div`
 export const Form = styled.form`
   input {
     width: 100%;
-    height: 40px;
-    border-radius: 8px;
+    height: 2.5rem;
+    border-radius: 0.5rem;
     border: 1px solid ${props => props.theme.colors.alto};
     padding: 0 15px;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 0.875rem;
+    margin-bottom: 0.62rem;
   }
 `;
 
 export const Button = styled.button`
   width: 100%;
-  height: 40px;
+  height: 2.4rem;
   border-radius: 8px;
   background: ${props => props.theme.colors.emerald};
   color: ${props => props.theme.colors.white};
   font-weight: bold;
   text-transform: uppercase;
   transition: background 0.2s ease-in;
-  font-size: 14px;
+  font-size: 0.875rem;
   border: 2px solid transparent;
 
   &:hover {

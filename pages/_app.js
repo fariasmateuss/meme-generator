@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '../styles/globals';

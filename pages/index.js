@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import Head from 'next/head';
 
-import logo from '../docs/resources/logo.jpg';
+import qs from 'qs';
 
 import {
   Wrapper,
@@ -11,12 +12,52 @@ import {
   Button,
 } from '../styles/pages/Home';
 
-export default function Home() {
+import logo from '../docs/resources/logo.jpg';
+
+export default function Home({ memes }) {
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [boxes, setBoxes] = useState([]);
+  const [generatedMeme, setGeneratedMeme] = useState(null);
+  const handleInputChange = index => e => {
+    const newValues = boxes;
+    newValues[index] = e.target.value;
+    setBoxes(newValues);
+  };
+
+  // eslint-disable-next-line no-shadow
+  function handleSelectTemplate(memes) {
+    setSelectedTemplate(memes);
+    setBoxes([]);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const params = qs.stringify({
+      template_id: selectedTemplate.id,
+      username: 'fariasmateuss',
+      password: 'fariasmateuss',
+      boxes: boxes.map(text => ({ text })),
+    });
+
+    const resp = await fetch(`https://api.imgflip.com/caption_image?${params}`);
+    const {
+      data: { url },
+    } = await resp.json();
+
+    setGeneratedMeme(url);
+  }
+
+  function handleReset() {
+    setSelectedTemplate(null);
+    setBoxes([]);
+    setGeneratedMeme(null);
+  }
+
   return (
     <Wrapper>
       <Head>
         <title>Meme Generator</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header>
@@ -28,37 +69,69 @@ export default function Home() {
       </Header>
 
       <Card>
-        <h2>Choose an image</h2>
+        {generatedMeme && (
+          <div>
+            <img
+              src={generatedMeme}
+              alt="Generated Meme"
+              className="thumbnail"
+            />
+            <Button type="button" onClick={handleReset}>
+              Create another meme
+            </Button>
+          </div>
+        )}
 
-        <Templates>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-          <button type="button">
-            <img src="" alt="" />
-          </button>
-        </Templates>
+        {!generatedMeme && (
+          <>
+            <h2>Choose an image</h2>
+            <Templates>
+              {memes.map(meme => (
+                <button
+                  key={meme.id}
+                  type="button"
+                  onClick={() => handleSelectTemplate(meme)}
+                  className={meme.id === selectedTemplate?.id ? 'selected' : ''}
+                >
+                  <img src={meme.url} alt={meme.name} />
+                </button>
+              ))}
+            </Templates>
 
-        <h2>Create your meme</h2>
+            {selectedTemplate && (
+              <>
+                <h2>Create your meme</h2>
+                <Form onSubmit={handleSubmit}>
+                  {new Array(selectedTemplate.box_count)
+                    .fill('')
+                    .map((_, index) => (
+                      <input
+                        key={String(Math.random())}
+                        placeholder={`Text #${index + 1}`}
+                        onChange={handleInputChange(index)}
+                      />
+                    ))}
 
-        <Form>
-          <input type="text" placeholder="Title" />
-        </Form>
-
-        <Button type="submit">Generate</Button>
+                  <Button type="submit">Generate</Button>
+                </Form>
+              </>
+            )}
+          </>
+        )}
       </Card>
     </Wrapper>
   );
 }
+
+export const getServerSideProps = async () => {
+  const response = await fetch('https://api.imgflip.com/get_memes');
+  const {
+    data: { memes },
+  } = await response.json();
+
+  return {
+    props: {
+      memes,
+    },
+  };
+};
