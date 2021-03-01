@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "ci": "yarn install"
   },
   "dependencies": {
     "babel-plugin-inline-react-svg": "^2.0.1",
