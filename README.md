@@ -1,22 +1,54 @@
+<p align="center">
+  <img src="docs/resources/logo-thumbnail.png" />
+</p>
+<p align="center">
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DiegoVictor/happy-web/CI?logo=github&style=flat-square)](https://github.com/fariasmateuss/meme-generator)
+[![react](https://img.shields.io/badge/reactjs-17.0.1-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
+[![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
+[![eslint](https://img.shields.io/badge/eslint-17.0.1-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
+[![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
+[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/fariasmateuss/meme-generator/main/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/fariasmateuss/meme-generator/pulls)<br>
+
+</p>
+
+<p align="center">
+   Know your meme generator :trollface: 
+</p>
+
+## Technologies
+
+- [Next.js](https://nextjs.org/) - Next. js is a JavaScript framework created by Vercel.
+- [Styled Components](https://styled-components.com/) - ES6 and CSS to styled components.
+- [Prettier](https://prettier.io/docs/en/cli.html) - An opinionated code formatter.
+- [ESlint](https://eslint.org) - ESLint statically analyzes your code to quickly find problems.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+First, clone this repository:
 
-```bash
-npm run dev
-# or
-yarn dev
+```
+git clone https://github.com/fariasmateuss/meme-generator.git
+```
+
+### Installing
+
+Run to install the dependencies;
+
+```
+yarn
+```
+
+To start the project;
+
+```
+yarn next
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Learn More
 
@@ -29,6 +61,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# License
+
+[MIT License](/LICENSE)
