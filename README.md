@@ -3,7 +3,7 @@
 </p>
 <p align="center">
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DiegoVictor/happy-web/CI?logo=github&style=flat-square)](https://github.com/fariasmateuss/meme-generator)
+[![Lint](https://github.com/fariasmateuss/meme-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/fariasmateuss/meme-generator/actions/workflows/ci.yml)
 [![react](https://img.shields.io/badge/reactjs-17.0.1-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
 [![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
 [![eslint](https://img.shields.io/badge/eslint-17.0.1-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
