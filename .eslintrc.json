@@ -20,6 +20,7 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "prettier/prettier": "error",
+    "no-shadow": ["error", { "allow": ["memes"] }],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "import/prefer-default-export": "off",

@@ -24,7 +24,6 @@ export default function Home({ memes }) {
     setBoxes(newValues);
   };
 
-  // eslint-disable-next-line no-shadow
   function handleSelectTemplate(memes) {
     setSelectedTemplate(memes);
     setBoxes([]);
