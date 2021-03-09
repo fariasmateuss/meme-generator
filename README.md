@@ -1,7 +1,6 @@
-<p align="center">
+<p>
   <img src="docs/resources/logo-thumbnail.png" />
 </p>
-<p align="center">
 
 [![react](https://img.shields.io/badge/reactjs-17.0.1-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
 [![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
@@ -10,7 +9,6 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/fariasmateuss/meme-generator/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/fariasmateuss/meme-generator/pulls)<br>
 
-</p>
 
 ## Technologies
 
@@ -66,6 +64,6 @@ All kinds of contributions are very welcome and appreciated
 
 # License
 
-Made with hearts by Mateus V. Farias
+Made with :hearts: by Mateus V. Farias
 
 Released under the [MIT License](/LICENSE)
