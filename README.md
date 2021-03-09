@@ -3,7 +3,6 @@
 </p>
 <p align="center">
 
-[![Lint](https://github.com/fariasmateuss/meme-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/fariasmateuss/meme-generator/actions/workflows/ci.yml)
 [![react](https://img.shields.io/badge/reactjs-17.0.1-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
 [![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
 [![eslint](https://img.shields.io/badge/eslint-17.0.1-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
@@ -11,10 +10,6 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/fariasmateuss/meme-generator/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/fariasmateuss/meme-generator/pulls)<br>
 
-</p>
-
-<p align="center">
-   Know your meme generator :trollface: 
 </p>
 
 ## Technologies
@@ -34,15 +29,13 @@ First, clone this repository:
 git clone https://github.com/fariasmateuss/meme-generator.git
 ```
 
-### Installing
-
-Run to install the dependencies;
+In the project directory, install all dependencies:
 
 ```
 yarn
 ```
 
-To start the project;
+Runs the app in the development mode:
 
 ```
 yarn next
@@ -65,6 +58,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Contributing
+
+If you liked the project and want to cooperate feel free to fork this repository and send Pull Requests.
+
+All kinds of contributions are very welcome and appreciated
+
 # License
 
-[MIT License](/LICENSE)
+Made with hearts by Mateus V. Farias
+
+Released under the [MIT License](/LICENSE)
