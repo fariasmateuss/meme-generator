@@ -126,7 +126,7 @@ export default function Home({ memes }) {
   );
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const response = await fetch('https://api.imgflip.com/get_memes');
   const {
     data: { memes },
@@ -136,5 +136,7 @@ export const getServerSideProps = async () => {
     props: {
       memes,
     },
+
+    revalidate: 60 * 60 * 24,
   };
 };
