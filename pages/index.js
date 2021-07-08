@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-
 import qs from 'qs';
 
 import {
@@ -11,8 +10,6 @@ import {
   Form,
   Button,
 } from '../styles/pages/Home';
-
-import logo from '../docs/resources/logo.jpg';
 
 export default function Home({ memes }) {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -60,7 +57,7 @@ export default function Home({ memes }) {
       </Head>
 
       <Header>
-        <img src={logo} alt="Meme Generator Logo" />
+        <img src="/logo.jpg" alt="Meme Generator Logo" />
 
         <div>
           <h1>Meme Generator</h1>
