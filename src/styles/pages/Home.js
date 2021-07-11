@@ -1,44 +1,12 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const Wrapper = styled.main`
-  min-width: 100vw;
-  min-height: 100vh;
+export const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`;
-
-export const Header = styled.header`
-  display: flex;
-  align-items: center;
-  margin-top: 1.9rem;
-
-  img {
-    width: 5.5rem;
-    height: auto;
-    border-radius: 1.25rem;
-
-    @media screen and (max-width: 425px) {
-      width: 4.5rem;
-      height: auto;
-    }
-  }
-
-  div {
-    margin-left: 1rem;
-
-    h1 {
-      font-family: Bangers;
-      font-size: 2.5rem;
-      color: ${props => props.theme.black};
-
-      @media screen and (max-width: 425px) {
-        font-size: 2.25rem;
-      }
-    }
-  }
+  margin-top: 3rem;
 `;
 
 export const Card = styled.div`
@@ -46,7 +14,6 @@ export const Card = styled.div`
   max-width: 35rem;
   width: 100%;
   padding: 1.25rem;
-  margin: 1.9rem 0 1.9rem 0;
   border-radius: 0.5rem;
   box-shadow: 0 6px 0.62rem 0 rgba(0, 0, 0, 0.2);
 
@@ -58,7 +25,7 @@ export const Card = styled.div`
 
   h2 {
     font-size: 1.35rem;
-    color: #24292e;
+    color: ${props => props.theme.title};
     margin-bottom: 0.6rem;
 
     @media screen and (max-width: 425px) {
