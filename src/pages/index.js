@@ -3,7 +3,6 @@ import Head from 'next/head';
 import qs from 'qs';
 
 import { Header } from '../components/Header';
-
 import { Wrapper, Card, Templates, Form, Button } from '../styles/pages/Home';
 
 export default function Home({ memes }) {
@@ -47,12 +46,12 @@ export default function Home({ memes }) {
 
   return (
     <main>
-      <Header />
-
       <Wrapper>
         <Head>
           <title>Meme Generator</title>
         </Head>
+
+        <Header />
 
         <Card>
           {generatedMeme && (

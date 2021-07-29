@@ -1,11 +1,19 @@
+import Image from 'next/image';
+
 import { Wrapper } from '../styles/components/Header';
 
 export function Header() {
   return (
     <Wrapper>
-      <img src="/logo.jpg" alt="Meme Generator" />
+      <Image
+        src="/logo.png"
+        alt="Meme Generator Logo"
+        width={90}
+        height={90}
+        objectFit="container"
+      />
 
-      <p>Recreate your favorite meme</p>
+      <h1>Meme Generator</h1>
     </Wrapper>
   );
 }
