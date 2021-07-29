@@ -1,11 +1,9 @@
 export const theme = {
-  background: '#eeeeee',
+  background: '#055388',
   white: '#ffffff',
-  black: '#2e384d',
-  emerald: '#51d764',
-  gray: 'rgb(115, 115, 128)',
+  black: '#000000',
+  'black-secondary': '#212121',
   alto: '#dbdbdb',
-  text: '#666666',
   title: '#2e384d',
-  'gray-100': '#e6e8eb',
+  green: 'rgb(81, 215, 100)',
 };
