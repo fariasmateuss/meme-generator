@@ -2,14 +2,9 @@ import { useState } from 'react';
 import Head from 'next/head';
 import qs from 'qs';
 
-import {
-  Wrapper,
-  Header,
-  Card,
-  Templates,
-  Form,
-  Button,
-} from '../styles/pages/Home';
+import { Header } from '../components/Header';
+
+import { Wrapper, Card, Templates, Form, Button } from '../styles/pages/Home';
 
 export default function Home({ memes }) {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -51,75 +46,73 @@ export default function Home({ memes }) {
   }
 
   return (
-    <Wrapper>
-      <Head>
-        <title>Meme Generator</title>
-      </Head>
+    <main>
+      <Header />
 
-      <Header>
-        <img src="/logo.jpg" alt="Meme Generator Logo" />
+      <Wrapper>
+        <Head>
+          <title>Meme Generator</title>
+        </Head>
 
-        <div>
-          <h1>Meme Generator</h1>
-        </div>
-      </Header>
+        <Card>
+          {generatedMeme && (
+            <div>
+              <img
+                src={generatedMeme}
+                alt="Generated Meme"
+                className="thumbnail"
+              />
+              <Button type="button" onClick={handleReset}>
+                Create another meme
+              </Button>
 
-      <Card>
-        {generatedMeme && (
-          <div>
-            <img
-              src={generatedMeme}
-              alt="Generated Meme"
-              className="thumbnail"
-            />
-            <Button type="button" onClick={handleReset}>
-              Create another meme
-            </Button>
+              <a href={generatedMeme} target="blank" download>
+                <Button type="button">Download</Button>
+              </a>
+            </div>
+          )}
 
-            <a href={generatedMeme} target="blank" download>
-              <Button type="button">Download</Button>
-            </a>
-          </div>
-        )}
+          {!generatedMeme && (
+            <>
+              <h2>Pick up a thumbnail</h2>
+              <Templates>
+                {memes.map(meme => (
+                  <button
+                    key={meme.id}
+                    type="button"
+                    onClick={() => handleSelectTemplate(meme)}
+                    className={
+                      meme.id === selectedTemplate?.id ? 'selected' : ''
+                    }
+                  >
+                    <img src={meme.url} alt={meme.name} />
+                  </button>
+                ))}
+              </Templates>
 
-        {!generatedMeme && (
-          <>
-            <h2>Choose an image</h2>
-            <Templates>
-              {memes.map(meme => (
-                <button
-                  key={meme.id}
-                  type="button"
-                  onClick={() => handleSelectTemplate(meme)}
-                  className={meme.id === selectedTemplate?.id ? 'selected' : ''}
-                >
-                  <img src={meme.url} alt={meme.name} />
-                </button>
-              ))}
-            </Templates>
+              {selectedTemplate && (
+                <>
+                  <h2>Create your meme</h2>
+                  <Form onSubmit={handleSubmit}>
+                    {new Array(selectedTemplate.box_count)
+                      .fill('')
+                      .map((_, index) => (
+                        <input
+                          key={String(Math.random())}
+                          placeholder={`Text #${index + 1}`}
+                          onChange={handleInputChange(index)}
+                        />
+                      ))}
 
-            {selectedTemplate && (
-              <>
-                <h2>Create your meme</h2>
-                <Form onSubmit={handleSubmit}>
-                  {new Array(selectedTemplate.box_count)
-                    .fill('')
-                    .map((_, index) => (
-                      <input
-                        key={String(Math.random())}
-                        placeholder={`Text #${index + 1}`}
-                        onChange={handleInputChange(index)}
-                      />
-                    ))}
-
-                  <Button type="submit">Generate</Button>
-                </Form>
-              </>
-            )}
-          </>
-        )}
-      </Card>
-    </Wrapper>
+                    <Button type="submit">Generate</Button>
+                  </Form>
+                </>
+              )}
+            </>
+          )}
+        </Card>
+      </Wrapper>
+    </main>
   );
 }
 
