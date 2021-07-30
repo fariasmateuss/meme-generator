@@ -1,45 +1,52 @@
-<p>
-  <img src="docs/resources/logo-thumbnail.png" />
+<p align="center">
+  <img src="./public/logo.png" width="150" />
 </p>
 
-[![react](https://img.shields.io/badge/reactjs-17.0.1-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
-[![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
-[![eslint](https://img.shields.io/badge/eslint-17.0.1-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
-[![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
-[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/fariasmateuss/meme-generator/main/LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/fariasmateuss/meme-generator/pulls)<br>
+<p align="center">
+  An web application to generate memes build with Next.js, Styled Components and API Flipimg
+</p>
 
+## Run Locally
 
-## Technologies
+Clone the project
 
-- [Next.js](https://nextjs.org/) - Next. js is a JavaScript framework created by Vercel.
-- [Styled Components](https://styled-components.com/) - ES6 and CSS to styled components.
-- [Prettier](https://prettier.io/docs/en/cli.html) - An opinionated code formatter.
-- [ESlint](https://eslint.org) - ESLint statically analyzes your code to quickly find problems.
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, clone this repository:
-
-```
+```bash
 git clone https://github.com/fariasmateuss/meme-generator.git
 ```
 
-In the project directory, install all dependencies:
+Go to the project directory
 
+```bash
+cd meme-generator
 ```
+
+Install dependencies
+
+```bash
 yarn
 ```
 
-Runs the app in the development mode:
+Start the server
 
+```bash
+yarn dev
 ```
+
+_or_
+
+```bash
 yarn next
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Deployment
+
+To deploy this project run
+
+```bash
+yarn build
+```
 
 ## Learn More
 
@@ -50,20 +57,18 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
 ## Contributing
 
 If you liked the project and want to cooperate feel free to fork this repository and send Pull Requests.
 
 All kinds of contributions are very welcome and appreciated
 
-# License
+## Show your support
+
+Give a ⭐️ if this project helped you!
 
 Made with :hearts: by Mateus V. Farias
+
+# License
 
 Released under the [MIT License](/LICENSE)
