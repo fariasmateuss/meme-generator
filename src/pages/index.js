@@ -3,6 +3,8 @@ import Head from 'next/head';
 import qs from 'qs';
 
 import { Header } from '../components/Header';
+import { PARAM_KEY_USER_ID, PARAM_KEY_PASSAWORD } from '../constants/params';
+
 import { Wrapper, Card, Templates, Form, Button } from '../styles/pages/Home';
 
 export default function Home({ memes }) {
@@ -25,8 +27,8 @@ export default function Home({ memes }) {
 
     const params = qs.stringify({
       template_id: selectedTemplate.id,
-      username: 'fariasmateuss',
-      password: 'fariasmateuss',
+      username: `${PARAM_KEY_USER_ID}`,
+      password: `${PARAM_KEY_PASSAWORD}`,
       boxes: boxes.map(text => ({ text })),
     });
 
