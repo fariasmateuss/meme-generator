@@ -1,0 +1,2 @@
+export const PARAM_KEY_USER_ID = process.env.NEXT_PUBLIC_IMGFLIP_USER_ID;
+export const PARAM_KEY_PASSAWORD = process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD;
