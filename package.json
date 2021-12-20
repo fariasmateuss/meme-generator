@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "ci": "yarn install"
+    "ci": "yarn install",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "next": "12.0.4",
@@ -21,11 +22,14 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "babel-plugin-styled-components": "^2.0.2",
     "eslint": "<8.0.0",
     "eslint-config-next": "^12.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "prettier": "^2.5.0"
   }
 }
