@@ -1,13 +1,13 @@
 import { ThemeProvider } from 'styled-components';
 
-import { theme } from '../styles/theme';
-import GlobalStyle from '../styles/globals';
+import { theme } from 'styles/theme';
+import GlobalStyles from 'styles/global';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <Component {...pageProps} />
-      <GlobalStyle />
+      <GlobalStyles />
     </ThemeProvider>
   );
 }
