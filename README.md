@@ -1,34 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="./public/logo.png" width="150" />
+</p>
 
-## Getting Started
+<p align="center">
+ Know your meme generator. 
+</p>
 
-First, run the development server:
+## Screenshots
+
+<p float="center">
+  <img src="docs/resources/stepOne.png" width="32%" />
+  <img src="docs/resources/stepTwo.png" width="32%" />
+  <img src="docs/resources/stepThree.png" width="32%" />
+</p>
+
+## Run Locally
+
+Ensure you have [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed.
+
+Clone the project:
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/fariasmateuss/meme-generator.git
+```
+
+Go to the project directory:
+
+```bash
+cd meme-generator
+```
+
+Add a .env.local file, make a [imgflip](https://imgflip.com/) account and add its key following .env.example file:
+
+```bash
+mv .env.example .env.local
+```
+
+Install dependencies:
+
+```bash
+yarn
+```
+
+Start the server:
+
+```bash
 yarn dev
+```
+
+_or_
+
+```bash
+yarn next
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Deployment
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To deploy this project run:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+yarn build
+```
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+If you liked the project and want to cooperate feel free to fork this repository and send Pull Requests.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All kinds of contributions are very welcome and appreciated.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact me
 
-## Deploy on Vercel
+Connect with me at [LinkedIn](https://www.linkedin.com/in/fariasmateuss/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Released under the [MIT License](/LICENSE)
+
+Made with :hearts: by Mateus V. Farias
