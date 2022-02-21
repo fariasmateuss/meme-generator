@@ -8,14 +8,7 @@ import { api } from 'services/api';
 import { getMemes } from 'services/resources/getMemes';
 import { Meme } from 'shared/imgflipAPI';
 
-import {
-  Boxes,
-  Button,
-  Form,
-  Card,
-  Templates,
-  Wrapper,
-} from 'styles/pages/Home';
+import * as S from 'styles/pages/Home';
 
 const IMGFLIP_PARAMS_USER_KEY = process.env.NEXT_PUBLIC_IMGFLIP_USER_ID;
 const IMGFLIP_PARAMS_ACCESS_KEY = process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD;
@@ -85,14 +78,14 @@ export default function Home({
 
   return (
     <main>
-      <Wrapper>
+      <S.Wrapper>
         <Head>
           <title>Meme Generator</title>
         </Head>
 
         <Header />
 
-        <Card>
+        <S.Card>
           {generatedMeme && (
             <div>
               <img
@@ -100,12 +93,12 @@ export default function Home({
                 alt="Generated Meme"
                 className="generated"
               />
-              <Button type="button" onClick={handleReset}>
+              <S.Button type="button" onClick={handleReset}>
                 Create another meme
-              </Button>
+              </S.Button>
 
               <a href={generatedMeme} target="blank" download>
-                <Button type="button">Download</Button>
+                <S.Button type="button">Download</S.Button>
               </a>
             </div>
           )}
@@ -113,9 +106,9 @@ export default function Home({
           {!generatedMeme && (
             <>
               <h2>Pick up a thumbnail</h2>
-              <Templates>
+              <S.Templates>
                 {memes.map(meme => (
-                  <Boxes
+                  <S.Boxes
                     key={meme.id}
                     type="button"
                     onClick={() => handleSelectTemplate(meme)}
@@ -129,14 +122,14 @@ export default function Home({
                       title={meme.name}
                       className="template"
                     />
-                  </Boxes>
+                  </S.Boxes>
                 ))}
-              </Templates>
+              </S.Templates>
 
               {selectedTemplate && (
                 <>
                   <h2>Create your meme</h2>
-                  <Form onSubmit={handleSubmit}>
+                  <S.Form onSubmit={handleSubmit}>
                     {new Array(selectedTemplate.box_count)
                       .fill('')
                       .map((_, index) => (
@@ -147,14 +140,14 @@ export default function Home({
                         />
                       ))}
 
-                    <Button type="submit">Generate</Button>
-                  </Form>
+                    <S.Button type="submit">Generate</S.Button>
+                  </S.Form>
                 </>
               )}
             </>
           )}
-        </Card>
-      </Wrapper>
+        </S.Card>
+      </S.Wrapper>
     </main>
   );
 }

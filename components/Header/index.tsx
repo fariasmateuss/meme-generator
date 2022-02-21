@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
-import { Wrapper } from 'styles/components/Header';
+import * as S from 'styles/components/Header';
 
 export function Header() {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <Image
         src="/logo.png"
         alt="Meme Generator Logo"
@@ -14,6 +14,6 @@ export function Header() {
       />
 
       <h1>Meme Generator</h1>
-    </Wrapper>
+    </S.Wrapper>
   );
 }
