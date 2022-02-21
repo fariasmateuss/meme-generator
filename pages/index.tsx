@@ -21,6 +21,8 @@ export async function getStaticProps() {
       props: {
         memes,
       },
+
+      revalidate: 60 * 60 * 24,
     };
   } catch (error) {
     console.error(error);
