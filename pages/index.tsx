@@ -1,12 +1,17 @@
 import { FormEvent, useState, ChangeEvent } from 'react';
 import { InferGetStaticPropsType } from 'next';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import qs from 'qs';
 
 import { Header } from 'components/Header';
-import { api } from 'services/api';
+import { LocalSwitcher } from 'components/LocaleSwitcher';
+import { downloadImage } from 'utils/downloadImage';
+import { Meme } from 'shared/types';
 import { getMemes } from 'services/resources/getMemes';
-import { Meme } from 'shared/imgflipAPI';
+import { api } from 'services/api';
+import en from 'locales/en';
+import pt from 'locales/pt';
 
 import * as S from 'styles/pages/Home';
 
@@ -39,13 +44,16 @@ export default function Home({
   const [selectedTemplate, setSelectedTemplate] = useState<Meme | null>(null);
   const [boxes, setBoxes] = useState<number[]>([]);
   const [generatedMeme, setGeneratedMeme] = useState<string | null>(null);
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : pt;
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     index: string,
   ) => {
     const newValues = boxes;
-    newValues[index] = e.target.value;
+    newValues[index] = event.target.value;
     setBoxes(newValues);
   };
 
@@ -54,8 +62,8 @@ export default function Home({
     setBoxes([]);
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
     const params = qs.stringify({
       template_id: selectedTemplate.id,
@@ -79,77 +87,84 @@ export default function Home({
   }
 
   return (
-    <main>
-      <S.Wrapper>
-        <Head>
-          <title>Meme Generator</title>
-        </Head>
+    <>
+      <Head>
+        <title>{t.hero}</title>
+      </Head>
 
-        <Header />
+      <main>
+        <LocalSwitcher />
 
-        <S.Card>
-          {generatedMeme && (
-            <div>
-              <img
-                src={generatedMeme}
-                alt="Generated Meme"
-                className="generated"
-              />
-              <S.Button type="button" onClick={handleReset}>
-                Create another meme
-              </S.Button>
+        <S.Wrapper>
+          <Header title={t.hero} alt={t.hero} />
 
-              <a href={generatedMeme} target="blank" download>
-                <S.Button type="button">Download</S.Button>
-              </a>
-            </div>
-          )}
+          <S.Card>
+            {generatedMeme && (
+              <div>
+                <img
+                  src={generatedMeme}
+                  alt="Generated Meme"
+                  className="generated"
+                />
+                <S.Button type="button" onClick={handleReset}>
+                  {t.recreate}
+                </S.Button>
 
-          {!generatedMeme && (
-            <>
-              <h2>Pick up a thumbnail</h2>
-              <S.Templates>
-                {memes.map(meme => (
-                  <S.Boxes
-                    key={meme.id}
-                    type="button"
-                    onClick={() => handleSelectTemplate(meme)}
-                    className={
-                      meme.id === selectedTemplate?.id ? 'selected' : ''
-                    }
-                  >
-                    <img
-                      src={meme.url}
-                      alt={meme.name}
-                      title={meme.name}
-                      className="template"
-                    />
-                  </S.Boxes>
-                ))}
-              </S.Templates>
+                <S.Button
+                  type="button"
+                  onClick={() => downloadImage(generatedMeme)}
+                >
+                  {t.download}
+                </S.Button>
+              </div>
+            )}
 
-              {selectedTemplate && (
-                <>
-                  <h2>Create your meme</h2>
-                  <S.Form onSubmit={handleSubmit}>
-                    {new Array(selectedTemplate.box_count)
-                      .fill('')
-                      .map((_, index) => (
-                        <input
-                          key={String(Math.random())}
-                          placeholder={`Text #${index + 1}`}
-                          onChange={e => handleInputChange(e, String(index))}
-                        />
-                      ))}
+            {!generatedMeme && (
+              <>
+                <h2>{t.title}</h2>
+                <S.Templates>
+                  {memes.map(meme => (
+                    <S.Boxes
+                      key={meme.id}
+                      type="button"
+                      onClick={() => handleSelectTemplate(meme)}
+                      className={
+                        meme.id === selectedTemplate?.id ? 'selected' : ''
+                      }
+                    >
+                      <img
+                        src={meme.url}
+                        alt={meme.name}
+                        title={meme.name}
+                        className="template"
+                      />
+                    </S.Boxes>
+                  ))}
+                </S.Templates>
 
-                    <S.Button type="submit">Generate</S.Button>
-                  </S.Form>
-                </>
-              )}
-            </>
-          )}
-        </S.Card>
-      </S.Wrapper>
-    </main>
+                {selectedTemplate && (
+                  <>
+                    <h2>{t.subtitle}</h2>
+                    <S.Form onSubmit={handleSubmit}>
+                      {new Array(selectedTemplate.box_count)
+                        .fill('')
+                        .map((_, index) => (
+                          <input
+                            key={String(Math.random())}
+                            placeholder={`${t.fields} #${index + 1}`}
+                            onChange={e => handleInputChange(e, String(index))}
+                          />
+                        ))}
+
+                      <S.Button type="submit">{t.create}</S.Button>
+                    </S.Form>
+                  </>
+                )}
+              </>
+            )}
+          </S.Card>
+        </S.Wrapper>
+      </main>
+    </>
   );
 }

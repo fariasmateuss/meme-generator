@@ -1,5 +1,5 @@
 import { api } from 'services/api';
-import { Meme } from 'shared/imgflipAPI';
+import { Meme } from 'shared/types';
 
 export async function getMemes() {
   try {
