@@ -8,9 +8,8 @@ export default createGlobalStyle`
   }
 
   body {
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.black};
-
+    background: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.text};
     font-family: 'Roboto',sans-serif;
     font-size: 1rem;
     font-weight: 400;
@@ -22,6 +21,12 @@ export default createGlobalStyle`
   }
 
   button {
+    border: 0;
+    outline: 0;
     cursor: pointer;
+  }
+
+  :root {
+    --title-shadow: #212121;
   }
 `;

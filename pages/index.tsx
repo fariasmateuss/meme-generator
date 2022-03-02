@@ -2,6 +2,7 @@ import { FormEvent, useState, ChangeEvent } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
 import qs from 'qs';
 
 import { Header } from 'components/Header';
@@ -62,7 +63,7 @@ export default function Home({
     setBoxes([]);
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleGenerateMeme(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const params = qs.stringify({
@@ -145,7 +146,7 @@ export default function Home({
                 {selectedTemplate && (
                   <>
                     <h2>{t.subtitle}</h2>
-                    <S.Form onSubmit={handleSubmit}>
+                    <S.Form onSubmit={handleGenerateMeme}>
                       {new Array(selectedTemplate.box_count)
                         .fill('')
                         .map((_, index) => (

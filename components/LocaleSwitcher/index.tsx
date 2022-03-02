@@ -13,9 +13,11 @@ export function LocalSwitcher() {
   };
 
   return (
-    <S.Select onChange={changeLanguage} defaultValue={locale}>
-      <option value="en">EN</option>
-      <option value="pt">PT</option>
-    </S.Select>
+    <S.Wrapper>
+      <S.Select onChange={changeLanguage} defaultValue={locale}>
+        <option value="en">EN</option>
+        <option value="pt">PT</option>
+      </S.Select>
+    </S.Wrapper>
   );
 }

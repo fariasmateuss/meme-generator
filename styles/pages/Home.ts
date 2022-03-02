@@ -8,13 +8,13 @@ export const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
 
-  @media screen and (max-width: 425px) {
-    margin: 0 0.75rem 0 0.75rem;
+  @media screen and (max-width: 560px) {
+    margin: 0 0.75rem;
   }
 `;
 
 export const Card = styled.div`
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.modal};
   width: min(35rem, 100%);
   padding: 1.25rem;
   margin: 1.9rem 0;
@@ -28,7 +28,7 @@ export const Card = styled.div`
 
   h2 {
     font-size: 1.35rem;
-    color: ${({ theme }) => theme.colors.title};
+    color: ${({ theme }) => theme.subtitle};
     margin-bottom: 0.6rem;
 
     @media screen and (max-width: 425px) {
@@ -55,7 +55,7 @@ export const Boxes = styled.button`
   border: 2px solid transparent;
 
   &.selected {
-    border-color: ${({ theme }) => theme.colors.green};
+    border-color: ${({ theme }) => theme.button};
   }
 
   .template {
@@ -66,10 +66,12 @@ export const Boxes = styled.button`
 
 export const Form = styled.form`
   input {
+    background: ${({ theme }) => theme.input.background};
+    color: ${({ theme }) => theme.input.color};
     width: 100%;
     height: 2.5rem;
     border-radius: 0.5rem;
-    border: 1px solid ${({ theme }) => theme.colors.alto};
+    border: 1px solid ${({ theme }) => theme.input.borderColor};
     padding: 0 15px;
     font-size: 0.875rem;
     margin-bottom: 0.62rem;
@@ -79,17 +81,16 @@ export const Form = styled.form`
 export const Button = styled.button`
   width: 100%;
   height: 2.4rem;
-  border-radius: 8px;
-  border: 2px solid transparent;
   font-size: 0.875rem;
   font-weight: bold;
   text-transform: uppercase;
-  background: ${({ theme }) => theme.colors.green};
-  color: ${({ theme }) => theme.colors.white};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.button};
+  color: ${({ theme }) => theme.text};
   transition: background 0.2s ease-in;
 
   &:hover {
-    background: ${({ theme }) => shade(0.2, theme.colors.green)};
+    background: ${({ theme }) => shade(0.2, theme.button)};
   }
 
   &:nth-child(2) {
