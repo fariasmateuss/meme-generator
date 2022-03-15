@@ -1,5 +1,5 @@
 import { api } from 'services/api';
-import { Meme } from 'shared/types';
+import { Meme } from 'shared/apiSchema';
 
 export async function getMemes() {
   try {

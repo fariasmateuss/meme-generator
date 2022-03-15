@@ -1,13 +1,10 @@
-import styled from 'styled-components';
-
-export const Wrapper = styled.div`
-  position: absolute;
-  top: 1rem;
-  left: 2rem;
-`;
+import styled, { css } from 'styled-components';
 
 export const Select = styled.select`
-  color: ${({ theme }) => theme.text};
   background-color: transparent;
   border: none;
+  ${({ theme }) =>
+    css`
+      color: ${theme.text};
+    `};
 `;

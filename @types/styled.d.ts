@@ -1,7 +1,7 @@
+/* eslint @typescript-eslint/no-empty-interface: "off" */
 import 'styled-components';
 
-import light from 'styles/theme/light';
-import dark from 'styles/theme/dark';
+import { dark, light } from 'styles/theme/colors';
 
 export type Theme = typeof light & typeof dark;
 

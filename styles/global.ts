@@ -28,5 +28,6 @@ export default createGlobalStyle`
 
   :root {
     --title-shadow: #212121;
+    --loader-color: #ffffff;
   }
 `;

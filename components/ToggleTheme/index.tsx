@@ -1,30 +1,25 @@
-import { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-import { shade } from 'polished';
 import Switch from 'react-switch';
+import { shade } from 'polished';
 
-import * as S from 'styles/components/ToggleTheme';
+import { colors } from 'styles/theme';
+import { useStylesState } from 'contexts/styles/StylesContext';
 
-type ToggleThemeProps = {
-  toggleTheme(): void;
-};
+import { ToggleThemeProps } from './types';
 
 export function ToggleTheme({ toggleTheme }: ToggleThemeProps) {
-  const { alto, name } = useContext(ThemeContext);
+  const { theme } = useStylesState();
 
   return (
-    <S.Wrapper>
-      <Switch
-        onChange={toggleTheme}
-        checked={name === 'dark'}
-        checkedIcon={false}
-        uncheckedIcon={false}
-        height={10}
-        width={40}
-        handleDiameter={20}
-        offColor={shade(0.15, alto)}
-        onColor={alto}
-      />
-    </S.Wrapper>
+    <Switch
+      onChange={toggleTheme}
+      checked={theme === 'dark'}
+      checkedIcon={false}
+      uncheckedIcon={false}
+      height={10}
+      width={40}
+      handleDiameter={20}
+      offColor={shade(0.15, colors.light.alto)}
+      onColor={colors.light.alto}
+    />
   );
 }

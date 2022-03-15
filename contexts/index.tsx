@@ -8,6 +8,17 @@ const DynamicStylesProvider = dynamic(
   },
 );
 
+const DynamicStylesContainer = dynamic(
+  () => import('./styles/StylesProvider').then(mod => mod.StylesContainer),
+  {
+    ssr: false,
+  },
+);
+
 export function AppProvider({ children }: PropsWithChildren<unknown>) {
-  return <DynamicStylesProvider>{children}</DynamicStylesProvider>;
+  return (
+    <DynamicStylesContainer>
+      <DynamicStylesProvider>{children}</DynamicStylesProvider>
+    </DynamicStylesContainer>
+  );
 }

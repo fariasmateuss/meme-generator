@@ -49,49 +49,49 @@ export default class MyDocument extends Document {
           />
 
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/x-icon"
             sizes="16x16 32x32 64x64 96x96"
             href="/favicons/favicon.ico"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="16x16"
             href="/favicons/favicon-16x16.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="32x32"
             href="/favicons/favicon-32x32.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="64x64"
             href="/favicons/favicon-64x64.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="96x96"
             href="/favicons/favicon-96x96.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="128x128"
             href="/favicons/favicon-128x128.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="256x256"
             href="/favicons/favicon-256x256.png"
           />
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/png"
             sizes="512x512"
             href="/favicons/favicon-512x512.png"

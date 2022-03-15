@@ -1,24 +1,17 @@
 import { PropsWithChildren } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-import { ToggleTheme } from 'components/ToggleTheme';
-import { usePersistedState } from 'hooks/usePersistedState';
+import { colors } from 'styles/theme';
 import GlobalStyle from 'styles/global';
 
-import dark from 'styles/theme/dark';
-import light from 'styles/theme/light';
+import { useStylesState } from './styles/StylesContext';
 
 export function StylesProvider({ children }: PropsWithChildren<unknown>) {
-  const [theme, setTheme] = usePersistedState<DefaultTheme>('theme', light);
-
-  const toggleTheme = () => {
-    setTheme(theme.name === 'light' ? dark : light);
-  };
+  const { theme } = useStylesState();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={colors[theme]}>
       <GlobalStyle />
-      <ToggleTheme toggleTheme={toggleTheme} />
       {children}
     </ThemeProvider>
   );
