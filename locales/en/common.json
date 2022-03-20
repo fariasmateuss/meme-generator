@@ -1,0 +1,19 @@
+{
+  "heading": {
+    "meme_generator": "Meme Generator",
+    "meme_generator_description": "Meme Generator logo - the illustration of BobSponge mocking",
+    "pick_a_meme": "Pick a meme",
+    "customize_your_own": "Customize your meme"
+  },
+  "fields": {
+    "placeholder": "Text"
+  },
+  "buttons": {
+    "generate": "Generate",
+    "download": "Download",
+    "recreate": "Reset"
+  },
+  "yup": {
+    "mixed_required_field": "This field is required."
+  }
+}

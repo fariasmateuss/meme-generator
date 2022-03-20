@@ -1,0 +1,19 @@
+{
+  "heading": {
+    "meme_generator": "Gerador de Meme",
+    "meme_generator_description": "Logo gerador de meme - Ilustração do Bob Esponja zombando",
+    "pick_a_meme": "Selecione um meme",
+    "customize_your_own": "Personalize seu meme"
+  },
+  "fields": {
+    "placeholder": "Texto"
+  },
+  "buttons": {
+    "generate": "Gerar",
+    "download": "Salvar",
+    "recreate": "Criar outro"
+  },
+  "yup": {
+    "mixed_required_field": "Este campo é obrigatório"
+  }
+}

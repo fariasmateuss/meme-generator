@@ -1,20 +1,22 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import qs from 'qs';
+import QueryString from 'qs';
 
+import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
 import { Header } from 'components/Layout/Header';
+import { useI18nState } from 'contexts/i18n/I18Context';
 import { getMemes } from 'services/resources/getMemes';
+import { useMemes } from 'hooks/useMemes';
 import { downloadImage } from 'utils/downloadImage';
-import { Meme } from 'shared/apiSchema';
+import { Template } from 'shared/apiSchema';
 import { api } from 'services/api';
-import en from 'locales/en';
-import pt from 'locales/pt';
 
 import * as S from 'styles/pages/Home';
+
+type Box = Template['box_count'];
 
 export async function getStaticProps() {
   try {
@@ -40,15 +42,21 @@ export async function getStaticProps() {
 export default function Home({
   memes,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [selectedTemplate, setSelectedTemplate] = useState<Meme | null>(null);
-  const [boxes, setBoxes] = useState<number[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
+    null,
+  );
+  const [boxes, setBoxes] = useState<Box[]>([]);
   const [generatedMeme, setGeneratedMeme] = useState<string | null>(null);
-  const router = useRouter();
-  const { locale } = router;
-  const t = locale === 'en' ? en : pt;
+  const [loading, setLoading] = useState(false);
+
+  const { t } = useI18nState();
+
+  const { data: templates } = useMemes({
+    initialData: memes,
+  });
 
   const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>, index: string) => {
+    (event: ChangeEvent<HTMLInputElement>, index: number) => {
       const newValues = boxes;
       newValues[index] = event.target.value;
       setBoxes(newValues);
@@ -56,7 +64,7 @@ export default function Home({
     [boxes],
   );
 
-  const handleSelectTemplate = useCallback((template: Meme) => {
+  const handleSelectTemplate = useCallback((template: Template) => {
     setSelectedTemplate(template);
     setBoxes([]);
   }, []);
@@ -65,19 +73,28 @@ export default function Home({
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const params = qs.stringify({
+      const params = QueryString.stringify({
         template_id: selectedTemplate.id,
         username: process.env.NEXT_PUBLIC_IMGFLIP_USER_ID,
         password: process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD,
         boxes: boxes.map(text => ({ text })),
       });
 
-      const resp = await api.post(`/caption_image?${params}`);
-      const {
-        data: { url },
-      } = resp.data;
+      try {
+        setLoading(true);
 
-      setGeneratedMeme(url);
+        const { url } = await api
+          .post(`/caption_image?${params}`)
+          .then(response => response.data.data);
+
+        setGeneratedMeme(url);
+      } catch {
+        throw new Error(
+          'Something went wrong while add a caption to meme template...',
+        );
+      } finally {
+        setLoading(false);
+      }
     },
     [selectedTemplate, boxes],
   );
@@ -91,63 +108,57 @@ export default function Home({
   return (
     <>
       <Head>
-        <title>{t.hero}</title>
+        <title>{t.heading.meme_generator}</title>
       </Head>
 
       <Header />
 
       <S.Wrapper>
-        <S.Logo>
-          <Image
-            src="/static/logo.png"
-            alt={t.hero}
-            objectFit="contain"
-            width={90}
-            height={90}
-          />
-
-          <S.LogoTitle>{t.hero}</S.LogoTitle>
-        </S.Logo>
+        <Logo />
 
         <S.Card>
           {generatedMeme && (
-            <div>
-              <img
+            <>
+              <Image
                 src={generatedMeme}
-                alt="Generated Meme"
+                alt={selectedTemplate.name}
+                width={selectedTemplate.width}
+                height={selectedTemplate.height}
                 className="generated"
+                quality={100}
               />
 
               <Button type="reset" onClick={handleReset}>
-                {t.recreate}
+                {t.buttons.recreate}
               </Button>
 
               <Button
                 type="button"
                 onClick={() => downloadImage(generatedMeme)}
               >
-                {t.download}
+                {t.buttons.download}
               </Button>
-            </div>
+            </>
           )}
 
           {!generatedMeme && (
             <>
-              <h2>{t.title}</h2>
+              <h2>{t.heading.pick_a_meme}</h2>
+
               <S.Templates>
-                {memes.map(meme => (
+                {templates.map(template => (
                   <S.Boxes
-                    key={meme.id}
-                    onClick={() => handleSelectTemplate(meme)}
-                    className={
-                      meme.id === selectedTemplate?.id ? 'selected' : ''
-                    }
+                    key={template.id}
+                    onClick={() => handleSelectTemplate(template)}
                   >
                     <img
-                      src={meme.url}
-                      alt={meme.name}
-                      title={meme.name}
-                      className="template"
+                      src={template.url}
+                      alt={template.name}
+                      title={template.name}
+                      aria-label={template.name}
+                      className={`template 
+                      ${template.id === selectedTemplate?.id ? 'selected' : ''}
+                      `}
                     />
                   </S.Boxes>
                 ))}
@@ -155,19 +166,21 @@ export default function Home({
 
               {selectedTemplate && (
                 <>
-                  <h2>{t.subtitle}</h2>
+                  <h2>{t.heading.customize_your_own}</h2>
                   <S.Form onSubmit={handleGenerateMeme}>
                     {new Array(selectedTemplate.box_count)
                       .fill('')
                       .map((_, index) => (
                         <input
                           key={String(Math.random())}
-                          placeholder={`${t.fields} #${index + 1}`}
-                          onChange={e => handleInputChange(e, String(index))}
+                          placeholder={`${t.fields.placeholder} #${index + 1}`}
+                          onChange={e => handleInputChange(e, index)}
                         />
                       ))}
 
-                    <Button type="submit">{t.create}</Button>
+                    <Button type="submit" loading={loading} disabled={loading}>
+                      {t.buttons.generate}
+                    </Button>
                   </S.Form>
                 </>
               )}

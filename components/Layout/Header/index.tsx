@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { LocaleSwitcher } from 'components/LocaleSwitcher';
 import { ToggleTheme } from 'components/ToggleTheme';
 import {
