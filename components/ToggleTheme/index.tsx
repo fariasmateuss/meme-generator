@@ -18,7 +18,7 @@ export function ToggleTheme({ toggleTheme }: ToggleThemeProps) {
       height={10}
       width={40}
       handleDiameter={20}
-      offColor={shade(0.15, colors.light.alto)}
+      offColor={colors.light.alto}
       onColor={colors.light.alto}
     />
   );

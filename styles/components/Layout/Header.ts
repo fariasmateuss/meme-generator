@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.header`
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  gap: 1rem;
+  position: absolute;
+  right: 15px;
+  top: 15px;
 
-  padding: 1rem 1rem 0;
+  display: flex;
+  gap: 1rem;
 `;

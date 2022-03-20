@@ -5,6 +5,10 @@ export const Select = styled.select`
   border: none;
   ${({ theme }) =>
     css`
-      color: ${theme.text};
+      color: ${theme.alto};
     `};
+
+  option {
+    background-color: transparent;
+  }
 `;

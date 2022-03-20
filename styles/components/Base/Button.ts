@@ -13,8 +13,8 @@ export const Button = styled(RippleButton)`
   border: 0;
   ${({ theme }) =>
     css`
-      background-color: ${theme.button};
-      color: ${theme.text};
+      background-color: ${theme.button.background};
+      color: ${theme.button.color};
     `};
 
   transition: background-color 200ms;
@@ -22,7 +22,7 @@ export const Button = styled(RippleButton)`
   &:hover {
     ${({ theme }) =>
       css`
-        background: ${shade(0.2, theme.button)};
+        background: ${shade(0.2, theme.button.background)};
       `};
   }
 
@@ -43,7 +43,7 @@ export const Button = styled(RippleButton)`
 
   &:hover {
     ${({ theme }) => css`
-      background-color: ${shade(0.2, theme.button)};
+      background-color: ${shade(0.2, theme.button.background)};
     `}
   }
 `;
