@@ -9,6 +9,7 @@ export const light = {
     background: '#f5f6fA',
   },
   text: '#ffffff',
+  loading: '#2e384d',
   button: {
     background: '#4395D8',
     color: '#ffffff',
@@ -26,6 +27,7 @@ export const dark = {
     background: '#404040',
   },
   text: '#ffffff',
+  loading: '#ffffff',
   button: {
     background: '#4395D8',
     color: '#ffffff',

@@ -1,8 +1,10 @@
-export type Meme = {
+export type Template = {
   id: string;
   name: string;
   url: string;
-  width: number;
-  height: number;
-  box_count: number;
+  width: string;
+  height: string;
+  box_count: {
+    [key: number]: string;
+  };
 };

@@ -43,6 +43,11 @@ export const Card = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Templates = styled.div`
   max-width: 100%;
   height: 10rem;

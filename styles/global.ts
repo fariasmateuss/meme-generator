@@ -27,7 +27,7 @@ export default createGlobalStyle`
   }
 
   :root {
-    --title-shadow: #212121;
-    --loader-color: #ffffff;
+    --loader-color: ${({ theme }) => theme.text};
+    --loading-color: ${({ theme }) => theme.loading};
   }
 `;

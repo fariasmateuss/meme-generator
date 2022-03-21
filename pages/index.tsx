@@ -1,5 +1,6 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
+import { ClipLoader } from 'react-spinners';
 import Head from 'next/head';
 import Image from 'next/image';
 import QueryString from 'qs';
@@ -17,6 +18,8 @@ import { api } from 'services/api';
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
+
+const loadingColorCss = 'var(--loading-color)';
 
 export async function getStaticProps() {
   try {
@@ -51,7 +54,7 @@ export default function Home({
 
   const { t } = useI18nState();
 
-  const { data: templates } = useMemes({
+  const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
 
@@ -143,7 +146,11 @@ export default function Home({
 
           {!generatedMeme && (
             <>
-              <h2>{t.heading.pick_a_meme}</h2>
+              <S.Container>
+                <h2>{t.heading.pick_a_meme}</h2>
+
+                {isFetching && <ClipLoader size={25} color={loadingColorCss} />}
+              </S.Container>
 
               <S.Templates>
                 {templates.map(template => (
