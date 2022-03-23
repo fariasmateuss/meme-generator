@@ -1,16 +1,16 @@
 import { PropsWithChildren } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { colors } from 'styles/theme';
 import GlobalStyle from 'styles/global';
-
-import { useStylesState } from './styles/StylesContext';
+import { theme } from 'styles/theme';
+import { useThemeState } from './theme/ThemeContext';
 
 export function StylesProvider({ children }: PropsWithChildren<unknown>) {
-  const { theme } = useStylesState();
+  const { mode } = useThemeState();
+  const costumTheme = theme[mode];
 
   return (
-    <ThemeProvider theme={colors[theme]}>
+    <ThemeProvider theme={costumTheme}>
       <GlobalStyle />
       {children}
     </ThemeProvider>

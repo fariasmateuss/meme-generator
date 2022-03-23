@@ -12,7 +12,7 @@ const DynamicStylesProvider = dynamic(
 );
 
 const DynamicStylesContainer = dynamic(
-  () => import('./styles/StylesProvider').then(mod => mod.StylesContainer),
+  () => import('./theme/ThemeProvider').then(mod => mod.ThemeContainer),
   {
     ssr: false,
   },

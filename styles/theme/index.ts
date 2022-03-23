@@ -1,6 +1,6 @@
 import { light, dark } from './colors';
 
-export const colors = {
+export const theme = {
   light,
   dark,
 };

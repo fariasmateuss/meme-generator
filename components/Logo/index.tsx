@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-import { useStylesState } from 'contexts/styles/StylesContext';
+import { useThemeState } from 'contexts/theme/ThemeContext';
 import { useI18nState } from 'contexts/i18n/I18Context';
 
 export function Logo() {
-  const { theme } = useStylesState();
+  const { mode } = useThemeState();
   const { t } = useI18nState();
 
-  return theme === 'light' ? (
+  return mode === 'light' ? (
     <Image
       src="/static/light-logo.svg"
       alt={t.heading.meme_generator_description}

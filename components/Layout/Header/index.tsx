@@ -1,20 +1,17 @@
 import { LocaleSwitcher } from 'components/LocaleSwitcher';
 import { ToggleTheme } from 'components/ToggleTheme';
-import {
-  useStylesDispatch,
-  useStylesState,
-} from 'contexts/styles/StylesContext';
+import { useThemeDispatch, useThemeState } from 'contexts/theme/ThemeContext';
 
 import * as S from 'styles/components/Layout/Header';
 
 export function Header() {
-  const { theme } = useStylesState();
-  const { switchTheme } = useStylesDispatch();
+  const { mode } = useThemeState();
+  const { onSelectMode } = useThemeDispatch();
 
   return (
     <S.Wrapper>
       <LocaleSwitcher />
-      <ToggleTheme toggleTheme={() => switchTheme(theme)} />
+      <ToggleTheme toggleTheme={() => onSelectMode(mode)} />
     </S.Wrapper>
   );
 }

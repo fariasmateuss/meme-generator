@@ -1,25 +1,23 @@
 import Switch from 'react-switch';
-import { shade } from 'polished';
 
-import { colors } from 'styles/theme';
-import { useStylesState } from 'contexts/styles/StylesContext';
-
+import { theme } from 'styles/theme';
+import { useThemeState } from 'contexts/theme/ThemeContext';
 import { ToggleThemeProps } from './types';
 
 export function ToggleTheme({ toggleTheme }: ToggleThemeProps) {
-  const { theme } = useStylesState();
+  const { mode } = useThemeState();
 
   return (
     <Switch
       onChange={toggleTheme}
-      checked={theme === 'dark'}
+      checked={mode === 'dark'}
       checkedIcon={false}
       uncheckedIcon={false}
       height={10}
       width={40}
       handleDiameter={20}
-      offColor={colors.light.alto}
-      onColor={colors.light.alto}
+      offColor={theme.light.alto}
+      onColor={theme.light.alto}
     />
   );
 }

@@ -1,9 +1,9 @@
 /* eslint @typescript-eslint/no-empty-interface: "off" */
 import 'styled-components';
 
-import { dark, light } from 'styles/theme/colors';
+import { light as defaultTheme } from 'styles/theme/colors';
 
-export type Theme = typeof light & typeof dark;
+export type Theme = typeof defaultTheme;
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}

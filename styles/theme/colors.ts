@@ -9,6 +9,9 @@ export const light = {
     background: '#f5f6fA',
   },
   text: '#ffffff',
+  orange: '#ff9000',
+  danger: '#c53030',
+  disabled: '#666360',
   loading: '#2e384d',
   button: {
     background: '#4395D8',
@@ -16,7 +19,8 @@ export const light = {
   },
 };
 
-export const dark = {
+export const dark: typeof light = {
+  ...light,
   background: '#171717',
   modal: '#444444',
   alto: '#dbdbdb',
@@ -26,10 +30,5 @@ export const dark = {
     borderColor: '#5a5a5a',
     background: '#404040',
   },
-  text: '#ffffff',
   loading: '#ffffff',
-  button: {
-    background: '#4395D8',
-    color: '#ffffff',
-  },
 };
