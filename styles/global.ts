@@ -29,5 +29,7 @@ export default createGlobalStyle`
   :root {
     --loader-color: ${({ theme }) => theme.text};
     --loading-color: ${({ theme }) => theme.loading};
+    --night-mode-color: #C5CFDC;
+    --light-mode-color: #F9B52A;
   }
 `;

@@ -1,23 +1,43 @@
-import Switch from 'react-switch';
+import { useCallback, useMemo } from 'react';
+import useSound from 'use-sound';
+import { MdLightMode, MdModeNight } from 'react-icons/md';
+import { IconContext } from 'react-icons';
 
-import { theme } from 'styles/theme';
-import { useThemeState } from 'contexts/theme/ThemeContext';
-import { ToggleThemeProps } from './types';
+import { useThemeDispatch, useThemeState } from 'contexts/theme/ThemeContext';
+import switchOnSound from 'public/sounds/switch-on.mp3';
+import switchOffSound from 'public/sounds/switch-off.mp3';
 
-export function ToggleTheme({ toggleTheme }: ToggleThemeProps) {
+import * as S from 'styles/components/ToggleTheme';
+
+export function ToggleTheme() {
   const { mode } = useThemeState();
+  const { onSelectMode } = useThemeDispatch();
+
+  const isDarkMode = mode === 'dark';
+  const [play] = useSound(isDarkMode ? switchOnSound : switchOffSound);
+
+  const iconColor = isDarkMode
+    ? 'var(--night-mode-color)'
+    : 'var(--light-mode-color)';
+
+  const handleClick = useCallback(() => {
+    onSelectMode(mode);
+    play();
+  }, [mode, play]);
+
+  const iconContextProviderValue = useMemo(
+    () => ({
+      color: iconColor,
+      size: '24',
+    }),
+    [iconColor],
+  );
 
   return (
-    <Switch
-      onChange={toggleTheme}
-      checked={mode === 'dark'}
-      checkedIcon={false}
-      uncheckedIcon={false}
-      height={10}
-      width={40}
-      handleDiameter={20}
-      offColor={theme.light.alto}
-      onColor={theme.light.alto}
-    />
+    <S.Button onClick={handleClick}>
+      <IconContext.Provider value={iconContextProviderValue}>
+        {isDarkMode ? <MdModeNight /> : <MdLightMode />}
+      </IconContext.Provider>
+    </S.Button>
   );
 }
