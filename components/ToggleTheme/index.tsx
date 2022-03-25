@@ -15,7 +15,7 @@ export function ToggleTheme() {
 
   const isDarkMode = mode === 'dark';
   const [play] = useSound(isDarkMode ? switchOnSound : switchOffSound);
-
+  const iconTitle = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode';
   const iconColor = isDarkMode
     ? 'var(--night-mode-color)'
     : 'var(--light-mode-color)';
@@ -34,7 +34,7 @@ export function ToggleTheme() {
   );
 
   return (
-    <S.Button onClick={handleClick}>
+    <S.Button onClick={handleClick} aria-label={iconTitle}>
       <IconContext.Provider value={iconContextProviderValue}>
         {isDarkMode ? <MdModeNight /> : <MdLightMode />}
       </IconContext.Provider>

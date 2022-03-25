@@ -48,7 +48,7 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const Templates = styled.div`
+export const Carousel = styled.ul`
   max-width: 100%;
   height: 10rem;
   display: flex;
@@ -58,7 +58,7 @@ export const Templates = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-export const Boxes = styled.span`
+export const Slide = styled.li`
   margin-right: 0.5rem;
 
   .template {

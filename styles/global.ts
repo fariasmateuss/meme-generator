@@ -26,6 +26,10 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 
+  ul {
+    list-style-type: none;
+  }
+
   :root {
     --loader-color: ${({ theme }) => theme.text};
     --loading-color: ${({ theme }) => theme.loading};

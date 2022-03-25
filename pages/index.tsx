@@ -152,9 +152,9 @@ export default function Home({
                 {isFetching && <ClipLoader size={25} color={loadingColorCss} />}
               </S.Container>
 
-              <S.Templates>
+              <S.Carousel>
                 {templates.map(template => (
-                  <S.Boxes
+                  <S.Slide
                     key={template.id}
                     onClick={() => handleSelectTemplate(template)}
                   >
@@ -167,9 +167,9 @@ export default function Home({
                       ${template.id === selectedTemplate?.id ? 'selected' : ''}
                       `}
                     />
-                  </S.Boxes>
+                  </S.Slide>
                 ))}
-              </S.Templates>
+              </S.Carousel>
 
               {selectedTemplate && (
                 <>
