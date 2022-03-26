@@ -4,6 +4,9 @@ import styled, { css } from 'styled-components';
 import RippleButton from 'components/RippleButton';
 
 export const Button = styled(RippleButton)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 2.4rem;
   font-size: 0.875rem;

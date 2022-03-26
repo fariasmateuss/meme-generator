@@ -8,3 +8,8 @@ export type Template = {
     [key: number]: string;
   };
 };
+
+export type CaptionedTemplate = {
+  url: string;
+  page_url: string;
+};

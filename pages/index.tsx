@@ -1,9 +1,11 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
+import { MdOutlineFileDownload } from 'react-icons/md';
 import Head from 'next/head';
 import Image from 'next/image';
 import QueryString from 'qs';
+import axios from 'axios';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
@@ -11,13 +13,13 @@ import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { getMemes } from 'services/resources/getMemes';
 import { useMemes } from 'hooks/useMemes';
-import { downloadImage } from 'utils/downloadImage';
-import { Template } from 'shared/apiSchema';
+import { Template, CaptionedTemplate } from 'shared/apiSchema';
 import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
+type DownloadTemplate = Pick<Template, 'url' | 'name'>;
 
 const loadingColorCss = 'var(--loading-color)';
 
@@ -49,14 +51,15 @@ export default function Home({
     null,
   );
   const [boxes, setBoxes] = useState<Box[]>([]);
-  const [generatedMeme, setGeneratedMeme] = useState<string | null>(null);
+  const [captionedTemplate, setCaptionedTemplate] =
+    useState<CaptionedTemplate | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const { t } = useI18nState();
 
   const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
+
+  const { t } = useI18nState();
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -72,7 +75,7 @@ export default function Home({
     setBoxes([]);
   }, []);
 
-  const handleGenerateMeme = useCallback(
+  const handleCaptionToTemplate = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
@@ -86,11 +89,11 @@ export default function Home({
       try {
         setLoading(true);
 
-        const { url } = await api
+        const payload = await api
           .post(`/caption_image?${params}`)
           .then(response => response.data.data);
 
-        setGeneratedMeme(url);
+        setCaptionedTemplate(payload);
       } catch {
         throw new Error(
           'Something went wrong while add a caption to meme template...',
@@ -99,14 +102,33 @@ export default function Home({
         setLoading(false);
       }
     },
-    [selectedTemplate, boxes],
+    [selectedTemplate, boxes, loading],
   );
 
   const handleReset = useCallback(() => {
     setSelectedTemplate(null);
     setBoxes([]);
-    setGeneratedMeme(null);
+    setCaptionedTemplate(null);
   }, []);
+
+  const handleDownloadTemplate = useCallback(
+    async ({ name, url }: DownloadTemplate) => {
+      const payload = await axios(url, {
+        responseType: 'blob',
+      })
+        .then(response => response.data)
+        .catch(error => {
+          throw new Error(error);
+        });
+      const generatedImage = URL.createObjectURL(payload);
+
+      const a = document.createElement('a');
+      a.href = generatedImage;
+      a.download = name;
+      a.click();
+    },
+    [],
+  );
 
   return (
     <>
@@ -120,10 +142,10 @@ export default function Home({
         <Logo />
 
         <S.Card>
-          {generatedMeme && (
+          {captionedTemplate && (
             <>
               <Image
-                src={generatedMeme}
+                src={captionedTemplate.url}
                 alt={selectedTemplate.name}
                 width={selectedTemplate.width}
                 height={selectedTemplate.height}
@@ -131,20 +153,31 @@ export default function Home({
                 quality={100}
               />
 
-              <Button type="reset" onClick={handleReset}>
+              <Button
+                type="reset"
+                aria-label={t.buttons.recreate}
+                onClick={handleReset}
+              >
                 {t.buttons.recreate}
               </Button>
 
               <Button
                 type="button"
-                onClick={() => downloadImage(generatedMeme)}
+                aria-label={t.buttons.download}
+                onClick={() =>
+                  handleDownloadTemplate({
+                    url: captionedTemplate.url,
+                    name: selectedTemplate.name,
+                  })
+                }
               >
+                <MdOutlineFileDownload size={20} />
                 {t.buttons.download}
               </Button>
             </>
           )}
 
-          {!generatedMeme && (
+          {!captionedTemplate && (
             <>
               <S.Container>
                 <h2>{t.heading.pick_a_meme}</h2>
@@ -174,7 +207,7 @@ export default function Home({
               {selectedTemplate && (
                 <>
                   <h2>{t.heading.customize_your_own}</h2>
-                  <S.Form onSubmit={handleGenerateMeme}>
+                  <S.Form onSubmit={handleCaptionToTemplate}>
                     {new Array(selectedTemplate.box_count)
                       .fill('')
                       .map((_, index) => (
@@ -185,7 +218,12 @@ export default function Home({
                         />
                       ))}
 
-                    <Button type="submit" loading={loading} disabled={loading}>
+                    <Button
+                      type="submit"
+                      aria-label={t.buttons.generate}
+                      loading={loading}
+                      disabled={loading}
+                    >
                       {t.buttons.generate}
                     </Button>
                   </S.Form>
