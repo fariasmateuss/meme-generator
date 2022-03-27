@@ -11,9 +11,13 @@
   "buttons": {
     "generate": "Generate",
     "download": "Download",
-    "recreate": "Reset"
+    "recreate": "Reset",
+    "share": "Share"
   },
   "yup": {
     "mixed_required_field": "This field is required."
+  },
+  "share": {
+    "description": "Recreate your favorite meme"
   }
 }

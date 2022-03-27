@@ -9,7 +9,6 @@ export type Template = {
   };
 };
 
-export type CaptionedTemplate = {
+export type Meme = {
   url: string;
-  page_url: string;
 };

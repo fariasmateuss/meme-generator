@@ -13,7 +13,6 @@ export const Button = styled(RippleButton)`
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 10px;
-  border: 0;
   ${({ theme }) =>
     css`
       background-color: ${theme.button.background};
@@ -29,8 +28,8 @@ export const Button = styled(RippleButton)`
       `};
   }
 
-  &:nth-child(2) {
-    margin: 0.62rem 0;
+  &:not(:last-child) {
+    margin: 0.68rem 0;
   }
 
   ${({ disabled }) =>

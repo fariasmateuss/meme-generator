@@ -10,7 +10,7 @@ export function I18nContainer({ children }: PropsWithChildren<unknown>) {
   const { locale } = router;
   const t = locale === 'en' ? en : pt;
 
-  const I18nState = useMemo(() => ({ t }), [t]);
+  const i18nState = useMemo(() => ({ t }), [t]);
 
-  return <I18nStateProvider value={I18nState}>{children}</I18nStateProvider>;
+  return <I18nStateProvider value={i18nState}>{children}</I18nStateProvider>;
 }

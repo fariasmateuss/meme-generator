@@ -1,11 +1,11 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
-import { MdOutlineFileDownload } from 'react-icons/md';
 import Head from 'next/head';
 import Image from 'next/image';
 import QueryString from 'qs';
 import axios from 'axios';
+import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
@@ -13,13 +13,15 @@ import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { getMemes } from 'services/resources/getMemes';
 import { useMemes } from 'hooks/useMemes';
-import { Template, CaptionedTemplate } from 'shared/apiSchema';
+import { useShare } from 'hooks/useShare';
+import { Template, Meme } from 'shared/apiSchema';
+import { links } from 'constants/links';
 import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
-type DownloadTemplate = Pick<Template, 'url' | 'name'>;
+type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
 
 const loadingColorCss = 'var(--loading-color)';
 
@@ -51,8 +53,7 @@ export default function Home({
     null,
   );
   const [boxes, setBoxes] = useState<Box[]>([]);
-  const [captionedTemplate, setCaptionedTemplate] =
-    useState<CaptionedTemplate | null>(null);
+  const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
   const [loading, setLoading] = useState(false);
 
   const { data: templates, isFetching } = useMemes({
@@ -93,7 +94,7 @@ export default function Home({
           .post(`/caption_image?${params}`)
           .then(response => response.data.data);
 
-        setCaptionedTemplate(payload);
+        setGeneratedMeme(payload);
       } catch {
         throw new Error(
           'Something went wrong while add a caption to meme template...',
@@ -108,18 +109,16 @@ export default function Home({
   const handleReset = useCallback(() => {
     setSelectedTemplate(null);
     setBoxes([]);
-    setCaptionedTemplate(null);
+    setGeneratedMeme(null);
   }, []);
 
-  const handleDownloadTemplate = useCallback(
-    async ({ name, url }: DownloadTemplate) => {
+  const handleDownloadGeneratedMeme = useCallback(
+    async ({ name, url }: DownloadGeneratedMeme) => {
       const payload = await axios(url, {
         responseType: 'blob',
       })
         .then(response => response.data)
-        .catch(error => {
-          throw new Error(error);
-        });
+        .catch(noop);
       const generatedImage = URL.createObjectURL(payload);
 
       const a = document.createElement('a');
@@ -129,6 +128,15 @@ export default function Home({
     },
     [],
   );
+
+  const share = useShare();
+  const shareGeneratedMeme = useCallback(() => {
+    share({
+      url: generatedMeme.url,
+      title: selectedTemplate.name,
+      text: `${t.share.description} - ${links.website}`,
+    });
+  }, [generatedMeme, selectedTemplate, share, t]);
 
   return (
     <>
@@ -142,10 +150,10 @@ export default function Home({
         <Logo />
 
         <S.Card>
-          {captionedTemplate && (
+          {generatedMeme && (
             <>
               <Image
-                src={captionedTemplate.url}
+                src={generatedMeme.url}
                 alt={selectedTemplate.name}
                 width={selectedTemplate.width}
                 height={selectedTemplate.height}
@@ -163,21 +171,28 @@ export default function Home({
 
               <Button
                 type="button"
+                aria-label={t.buttons.share}
+                onClick={shareGeneratedMeme}
+              >
+                {t.buttons.share}
+              </Button>
+
+              <Button
+                type="button"
                 aria-label={t.buttons.download}
                 onClick={() =>
-                  handleDownloadTemplate({
-                    url: captionedTemplate.url,
+                  handleDownloadGeneratedMeme({
+                    url: generatedMeme.url,
                     name: selectedTemplate.name,
                   })
                 }
               >
-                <MdOutlineFileDownload size={20} />
                 {t.buttons.download}
               </Button>
             </>
           )}
 
-          {!captionedTemplate && (
+          {!generatedMeme && (
             <>
               <S.Container>
                 <h2>{t.heading.pick_a_meme}</h2>

@@ -11,9 +11,13 @@
   "buttons": {
     "generate": "Gerar",
     "download": "Salvar",
-    "recreate": "Criar outro"
+    "recreate": "Criar outro",
+    "share": "Compartilhar"
   },
   "yup": {
     "mixed_required_field": "Este campo é obrigatório"
+  },
+  "share": {
+    "description": "Recrie seu meme favorito"
   }
 }
