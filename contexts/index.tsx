@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import dynamic from 'next/dynamic';
 
 import { I18nContainer } from './i18n/I18nProvider';
+import { ToastsProvider } from './toasts/ToastsProvider';
 
 const DynamicStylesProvider = dynamic(
   () => import('./styles').then(mod => mod.StylesProvider),
@@ -24,9 +25,11 @@ export function AppProvider({ children }: PropsWithChildren<unknown>) {
   return (
     <DynamicStylesContainer>
       <DynamicStylesProvider>
-        <QueryClientProvider client={queryClient}>
-          <I18nContainer>{children}</I18nContainer>
-        </QueryClientProvider>
+        <ToastsProvider>
+          <QueryClientProvider client={queryClient}>
+            <I18nContainer>{children}</I18nContainer>
+          </QueryClientProvider>
+        </ToastsProvider>
       </DynamicStylesProvider>
     </DynamicStylesContainer>
   );

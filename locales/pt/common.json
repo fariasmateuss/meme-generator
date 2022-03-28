@@ -11,13 +11,25 @@
   "buttons": {
     "generate": "Gerar",
     "download": "Salvar",
-    "recreate": "Criar outro",
+    "generate_new": "Gerar novo",
     "share": "Compartilhar"
   },
   "yup": {
-    "mixed_required_field": "Este campo é obrigatório"
+    "mixed_required_field": "Er... Este campo é obrigatório"
   },
-  "share": {
-    "description": "Recrie seu meme favorito"
+  "404": {
+    "you_are_too_late_this_page_is_no_more": "Tarde demais. Esse página já não está mais entre nós"
+  },
+  "actions": {
+    "share": "Impressionante, né. Só vem!",
+    "errors": {
+      "something_is_all_gummed_up": "Isso veio do Paraguai",
+      "lets_think_about_this_error": "Vamos refletir sobre este erro. Verifique o console do seu navegador para mais detalhes",
+      "the_API_is_being_wiggly": "A API está dando uma de engraçadinha",
+      "the_server_is_being_foolish": "O servidor está de birra"
+    },
+    "info": {
+      "share_API": "A API de compartilhamento não é suportada neste navegador. Copiamos o link para a área de transferência"
+    }
   }
 }

@@ -11,13 +11,25 @@
   "buttons": {
     "generate": "Generate",
     "download": "Download",
-    "recreate": "Reset",
+    "generate_new": "Generate new",
     "share": "Share"
   },
   "yup": {
-    "mixed_required_field": "This field is required."
+    "mixed_required_field": "Dang, this field is required"
   },
-  "share": {
-    "description": "Recreate your favorite meme"
+  "404": {
+    "you_are_too_late_this_page_is_no_more": "You're too late, this page is no more"
+  },
+  "actions": {
+    "share": "Impressive. So come on in!",
+    "errors": {
+      "something_is_all_gummed_up": "Something is all gummed up",
+      "lets_think_about_this_error": "Let's think about this error. Check your browser console for more details",
+      "the_API_is_being_wiggly": "The API is being wiggly",
+      "the_server_is_being_foolish": "The server is being foolish"
+    },
+    "info": {
+      "share_API": "The Share API is not supported in this browser. We copied the link to the clipboard"
+    }
   }
 }

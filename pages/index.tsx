@@ -11,6 +11,7 @@ import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
 import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
+import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 import { getMemes } from 'services/resources/getMemes';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
@@ -56,11 +57,12 @@ export default function Home({
   const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const { addToast } = useToastsDispatch();
+  const { t } = useI18nState();
+
   const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
-
-  const { t } = useI18nState();
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -92,18 +94,21 @@ export default function Home({
 
         const payload = await api
           .post(`/caption_image?${params}`)
-          .then(response => response.data.data);
+          .then(response => response.data.data)
+          .catch(noop);
 
         setGeneratedMeme(payload);
       } catch {
-        throw new Error(
-          'Something went wrong while add a caption to meme template...',
-        );
+        addToast({
+          title: t.actions.errors.the_API_is_being_wiggly,
+          description: t.actions.errors.lets_think_about_this_error,
+          type: 'error',
+        });
       } finally {
         setLoading(false);
       }
     },
-    [selectedTemplate, boxes, loading],
+    [selectedTemplate, boxes, loading, addToast, t],
   );
 
   const handleReset = useCallback(() => {
@@ -114,19 +119,27 @@ export default function Home({
 
   const handleDownloadGeneratedMeme = useCallback(
     async ({ name, url }: DownloadGeneratedMeme) => {
-      const payload = await axios(url, {
-        responseType: 'blob',
-      })
-        .then(response => response.data)
-        .catch(noop);
-      const generatedImage = URL.createObjectURL(payload);
+      try {
+        const payload = await axios(url, {
+          responseType: 'blob',
+        })
+          .then(response => response.data)
+          .catch(noop);
 
-      const a = document.createElement('a');
-      a.href = generatedImage;
-      a.download = name;
-      a.click();
+        const generatedImage = URL.createObjectURL(payload);
+        const a = document.createElement('a');
+        a.href = generatedImage;
+        a.download = name;
+        a.click();
+      } catch {
+        addToast({
+          title: t.actions.errors.the_server_is_being_foolish,
+          description: t.actions.errors.lets_think_about_this_error,
+          type: 'error',
+        });
+      }
     },
-    [],
+    [addToast, t],
   );
 
   const share = useShare();
@@ -134,7 +147,7 @@ export default function Home({
     share({
       url: generatedMeme.url,
       title: selectedTemplate.name,
-      text: `${t.share.description} - ${links.website}`,
+      text: `${links.website} ${t.actions.share}`,
     });
   }, [generatedMeme, selectedTemplate, share, t]);
 
@@ -163,10 +176,10 @@ export default function Home({
 
               <Button
                 type="reset"
-                aria-label={t.buttons.recreate}
+                aria-label={t.buttons.generate_new}
                 onClick={handleReset}
               >
-                {t.buttons.recreate}
+                {t.buttons.generate_new}
               </Button>
 
               <Button
