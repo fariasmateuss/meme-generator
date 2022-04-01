@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "cypress/globals": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -14,7 +15,7 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": ["import", "jsx-a11y", "react", "react-hooks", "prettier"],
+  "plugins": ["import", "jsx-a11y", "react", "react-hooks", "cypress", "prettier"],
   "extends": ["airbnb", "prettier"],
   "rules": {
     "prettier/prettier": "error",
