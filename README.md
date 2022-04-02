@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/logo.png" width="150" />
+  <img src="public/static/dark-logo.svg"  />
 </p>
 
 <p align="center">
@@ -9,9 +9,9 @@
 ## Screenshots
 
 <p float="center">
-  <img src="docs/resources/stepOne.png" width="32%" />
-  <img src="docs/resources/stepTwo.png" width="32%" />
-  <img src="docs/resources/stepThree.png" width="32%" />
+  <img src="docs/resources/templates.png" width="32%" />
+  <img src="docs/resources/selected-template.png" width="32%" />
+  <img src="docs/resources/generated-meme.png" width="32%" />
 </p>
 
 ## Run Locally
