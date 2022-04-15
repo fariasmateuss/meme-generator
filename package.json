@@ -13,7 +13,8 @@
     "lint-check-types": "tsc --noEmit",
     "linter": "yarn lint-code-style && yarn lint-check-types && yarn lint-code-format",
     "ci": "yarn install",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "commit": "cz"
   },
   "dependencies": {
     "@types/lodash.noop": "^3.0.6",
@@ -49,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "babel-plugin-styled-components": "^2.0.2",
+    "commitizen": "^4.2.4",
     "eslint": "8.12.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.4.0",
