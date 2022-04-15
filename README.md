@@ -64,15 +64,15 @@ To deploy this project run:
 yarn build
 ```
 
+## Feedback
+
+If you have any ideas or feedback for this project, please let me know. Connect with me on [Twitter](https://twitter.com/fariasmateuss) or [LinkedIn](https://www.linkedin.com/in/fariasmateuss/).
+
 ## Contributing
 
-If you liked the project and want to cooperate feel free to fork this repository and send Pull Requests.
+If you found this useful, please help us improve it by contributing.
 
-All kinds of contributions are very welcome and appreciated.
-
-## Contact me
-
-Connect with me at [LinkedIn](https://www.linkedin.com/in/fariasmateuss/)
+See [contributing](/docs/CONTRIBUTING.md) for more details.
 
 # License
 
