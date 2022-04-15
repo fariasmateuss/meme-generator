@@ -26,5 +26,4 @@ jobs:
             @semantic-release/git
         env: 
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-        
+          
