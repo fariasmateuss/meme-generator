@@ -2,7 +2,6 @@ import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
 import { NextSeo } from 'next-seo';
-import Head from 'next/head';
 import Image from 'next/image';
 import QueryString from 'qs';
 import axios from 'axios';
