@@ -20,6 +20,10 @@
   "404": {
     "you_are_too_late_this_page_is_no_more": "You're too late, this page is no more"
   },
+  "SEO": {
+    "recreate_your_favorite_meme_online": "Recreate your favorite meme online",
+    "know_your_meme_generator": "Know your meme generator, browse the most popular memes, create your owm meme like Drake Hotline Bling, Two Buttons, Change My Mind"
+  },
   "actions": {
     "share": "Impressive. So come on in!",
     "errors": {
