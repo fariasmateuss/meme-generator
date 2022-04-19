@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/fariasmateuss/meme-generator/compare/v1.1.0...v1.1.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* move images property to openGraph at next-seo config ([ac7274c](https://github.com/fariasmateuss/meme-generator/commit/ac7274c9308408a8ef7cb17f813f2e15b2a1b0f6))
+
 # [1.1.0](https://github.com/fariasmateuss/meme-generator/compare/v1.0.0...v1.1.0) (2022-04-19)
 
 
