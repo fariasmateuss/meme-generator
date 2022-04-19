@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/fariasmateuss/meme-generator/compare/v1.0.0...v1.1.0) (2022-04-19)
+
+
+### Features
+
+* implement dynamic SEO metadata ([d3d1a59](https://github.com/fariasmateuss/meme-generator/commit/d3d1a59afb2255d8c1f664a019ad27b45b6f99ef))
+
 # 1.0.0 (2022-04-15)
 
 
