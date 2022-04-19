@@ -5,14 +5,14 @@ export default {
   openGraph: {
     type: 'website',
     url,
+    images: [
+      {
+        url: `${url}/static/banner.png`,
+        width: 1280,
+        height: 720,
+      },
+    ],
   },
-  images: [
-    {
-      url: `${url}/static/banner.png`,
-      width: 1280,
-      height: 720,
-    },
-  ],
   twitter: {
     site: '@fariasmateuss',
     handle: '@fariasmateuss',
