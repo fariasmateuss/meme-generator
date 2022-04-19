@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import media from 'styled-media-query';
 
 export const Wrapper = styled.main`
   min-height: 100vh;
@@ -7,9 +8,9 @@ export const Wrapper = styled.main`
   flex-direction: column;
   align-items: center;
 
-  @media screen and (max-width: 560px) {
+  ${media.lessThan('medium')`
     margin: 0 0.75rem;
-  }
+  `}
 `;
 
 export const Card = styled.div`
@@ -18,11 +19,7 @@ export const Card = styled.div`
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 1px;
   margin: 0.5rem 0 1.9rem;
-
-  ${({ theme }) =>
-    css`
-      background: ${theme.modal};
-    `};
+  background: ${({ theme }) => theme.modal};
 
   .generated {
     width: min(35rem, 100%);
@@ -32,10 +29,7 @@ export const Card = styled.div`
   h2 {
     font-size: 1.35rem;
     margin-bottom: 0.5rem;
-    ${({ theme }) =>
-      css`
-        color: ${theme.heading};
-      `};
+    color: ${({ theme }) => theme.heading};
 
     @media screen and (max-width: 425px) {
       font-size: 1.25rem;
@@ -68,10 +62,7 @@ export const Slide = styled.li`
     border: 2px solid transparent;
 
     &.selected {
-      ${({ theme }) =>
-        css`
-          border-color: ${theme.button.background};
-        `};
+      border-color: ${({ theme }) => theme.button.background};
     }
   }
 `;

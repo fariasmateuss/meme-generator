@@ -1,6 +1,7 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
+import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 import Image from 'next/image';
 import QueryString from 'qs';
@@ -153,9 +154,15 @@ export default function Home({
 
   return (
     <>
-      <Head>
-        <title>{t.heading.meme_generator}</title>
-      </Head>
+      <NextSeo
+        title={t.heading.meme_generator}
+        description={t.SEO.know_your_meme_generator}
+        openGraph={{
+          title: t.SEO.recreate_your_favorite_meme_online,
+          description: t.SEO.know_your_meme_generator,
+          site_name: t.heading.meme_generator,
+        }}
+      />
 
       <Header />
 

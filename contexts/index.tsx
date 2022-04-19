@@ -1,7 +1,9 @@
 import { PropsWithChildren, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { DefaultSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 
+import SEO from 'next-seo.config';
 import { I18nContainer } from './i18n/I18nProvider';
 import { ToastsProvider } from './toasts/ToastsProvider';
 
@@ -23,14 +25,17 @@ export function AppProvider({ children }: PropsWithChildren<unknown>) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <DynamicStylesContainer>
-      <DynamicStylesProvider>
-        <ToastsProvider>
-          <QueryClientProvider client={queryClient}>
-            <I18nContainer>{children}</I18nContainer>
-          </QueryClientProvider>
-        </ToastsProvider>
-      </DynamicStylesProvider>
-    </DynamicStylesContainer>
+    <>
+      <DefaultSeo {...SEO} />
+      <DynamicStylesContainer>
+        <DynamicStylesProvider>
+          <ToastsProvider>
+            <QueryClientProvider client={queryClient}>
+              <I18nContainer>{children}</I18nContainer>
+            </QueryClientProvider>
+          </ToastsProvider>
+        </DynamicStylesProvider>
+      </DynamicStylesContainer>
+    </>
   );
 }
