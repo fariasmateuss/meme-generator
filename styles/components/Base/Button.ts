@@ -22,10 +22,7 @@ export const Button = styled(RippleButton)`
   transition: background-color 200ms;
 
   &:hover {
-    ${({ theme }) =>
-      css`
-        background: ${shade(0.2, theme.button.background)};
-      `};
+    background-color: ${({ theme }) => shade(0.2, theme.button.background)};
   }
 
   &:not(:last-child) {
@@ -44,8 +41,6 @@ export const Button = styled(RippleButton)`
   }
 
   &:hover {
-    ${({ theme }) => css`
-      background-color: ${shade(0.2, theme.button.background)};
-    `}
+    background-color: ${({ theme }) => shade(0.2, theme.button.background)};
   }
 `;

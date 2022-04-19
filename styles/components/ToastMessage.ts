@@ -1,5 +1,6 @@
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 import { animated } from 'react-spring';
+import media from 'styled-media-query';
 
 import { ToastMessageType } from 'shared/toasts';
 
@@ -45,9 +46,9 @@ export const Container = styled(animated.div)<ContainerProps>`
   border-radius: 10px;
   padding: 16px 30px 16px 16px;
 
-  @media (max-width: 500px) {
+  ${media.lessThan('small')`
     max-width: unset;
-  }
+  `}
 
   & + div {
     margin-top: 16px;

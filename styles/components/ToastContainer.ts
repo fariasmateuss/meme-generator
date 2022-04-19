@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'styled-media-query';
 
 export const ToastContainer = styled.div`
   position: fixed;
@@ -7,7 +8,7 @@ export const ToastContainer = styled.div`
   right: 20px;
   z-index: 110;
 
-  @media (max-width: 500px) {
+  ${media.lessThan('small')`
     left: 20px;
-  }
+  `}
 `;
