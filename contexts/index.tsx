@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { DefaultSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
 
-import SEO from 'next-seo.config';
+import SEO from 'config/next-seo';
 import { I18nContainer } from './i18n/I18nProvider';
 import { ToastsProvider } from './toasts/ToastsProvider';
 
