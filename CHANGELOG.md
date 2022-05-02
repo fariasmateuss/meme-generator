@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/fariasmateuss/meme-generator/compare/v1.1.1...v1.2.0) (2022-05-02)
+
+
+### Features
+
+* generate sitemap.xml at build time ([72c3fe7](https://github.com/fariasmateuss/meme-generator/commit/72c3fe7380c4f1aa29a9c2a14adfa08917ff4c31))
+
 ## [1.1.1](https://github.com/fariasmateuss/meme-generator/compare/v1.1.0...v1.1.1) (2022-04-19)
 
 
