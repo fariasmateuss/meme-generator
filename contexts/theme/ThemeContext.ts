@@ -1,4 +1,5 @@
 import { useContext, createContext } from 'react';
+
 import { ThemeDispatchContextData, ThemeStateContextData } from './types';
 
 export const ThemeStateContext = createContext<

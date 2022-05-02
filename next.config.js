@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   swcMinify: true,
-  webpack: config => {
+  webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.(mp3)$/,
       use: {
@@ -14,6 +14,10 @@ module.exports = {
         },
       },
     });
+
+    if (isServer) {
+      require('./scripts/generate-sitemap');
+    }
 
     return config;
   },

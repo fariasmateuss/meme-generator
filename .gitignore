@@ -35,3 +35,6 @@ yarn-error.log*
 
 # tsconfig
 tsconfig.tsbuildinfo
+
+# sitemap
+public/sitemap.xml

@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from 'styles/global';
 import { theme } from 'styles/theme';
+
 import { useThemeState } from './theme/ThemeContext';
 
 export function StylesProvider({ children }: PropsWithChildren<unknown>) {
