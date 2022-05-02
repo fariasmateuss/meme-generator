@@ -2,6 +2,7 @@ import { PropsWithChildren, useCallback, useEffect, useMemo } from 'react';
 
 import { THEME_STORAGE_KEY } from 'constants/localStorage';
 import { usePersistedState } from 'hooks/usePersistedState';
+
 import { ThemeDispatchProvider, ThemeStateProvider } from './ThemeContext';
 import { Theme } from './types';
 

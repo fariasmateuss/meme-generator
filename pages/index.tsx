@@ -1,9 +1,9 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
+import { stringify } from 'qs';
 import Image from 'next/image';
 import Head from 'next/head';
-import QueryString from 'qs';
 import axios from 'axios';
 import noop from 'lodash.noop';
 
@@ -38,7 +38,6 @@ export async function getStaticProps() {
       revalidate: 60 * 60 * 24,
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error);
 
     return {
@@ -82,7 +81,7 @@ export default function Home({
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const params = QueryString.stringify({
+      const params = stringify({
         template_id: selectedTemplate.id,
         username: process.env.NEXT_PUBLIC_IMGFLIP_USER_ID,
         password: process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD,

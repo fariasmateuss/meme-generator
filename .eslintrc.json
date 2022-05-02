@@ -14,12 +14,32 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": ["import", "jsx-a11y", "react", "react-hooks", "prettier"],
-  "extends": ["airbnb", "prettier"],
+  "plugins": [
+    "import",
+    "jsx-a11y",
+    "react",
+    "react-hooks",
+    "prettier"
+  ],
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "prettier"
+  ],
   "rules": {
     "prettier/prettier": "error",
     "camelcase": "off",
     "no-shadow": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
     "no-restricted-exports": "off",
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
@@ -39,13 +59,33 @@
         "jsx": "never"
       }
     ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal"
+        ],
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
+    "global-require": "off",
     "quotes": "off",
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": ["Link"],
-        "specialLink": ["hrefLeft", "hrefRight"],
-        "aspects": ["invalidHref", "preferButton"]
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "hrefLeft",
+          "hrefRight"
+        ],
+        "aspects": [
+          "invalidHref",
+          "preferButton"
+        ]
       }
     ]
   },
@@ -53,13 +93,23 @@
     {
       "files": "**/*.+(ts|tsx)",
       "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint/eslint-plugin"],
-      "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+      "plugins": [
+        "@typescript-eslint/eslint-plugin"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "prettier"
+      ],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "no-use-before-define": [0],
-        "@typescript-eslint/no-use-before-define": [1],
+        "no-use-before-define": [
+          0
+        ],
+        "@typescript-eslint/no-use-before-define": [
+          1
+        ],
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-var-requires": "off"
       }
@@ -69,6 +119,12 @@
     "import/resolver": {
       "typescript": {
         "project": "."
+      },
+      "node": {
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
       }
     },
     "react": {

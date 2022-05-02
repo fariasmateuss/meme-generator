@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import en from 'locales/en/common.json';
 import pt from 'locales/pt/common.json';
+
 import { I18nStateProvider } from './I18Context';
 
 export function I18nContainer({ children }: PropsWithChildren<unknown>) {

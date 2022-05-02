@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import noop from 'lodash.noop';
+
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 
