@@ -26,6 +26,10 @@
   }, 
   "actions": {
     "share": "Impressive. So come on in!",
+    "theme": {
+      "activate_dark_mode": "Activate dark mode",
+      "activate_light_mode": "Activate light mode"
+    },
     "errors": {
       "something_is_all_gummed_up": "Something is all gummed up",
       "lets_think_about_this_error": "Let's think about this error. Check your browser console for more details",

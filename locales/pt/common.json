@@ -26,6 +26,10 @@
   }, 
   "actions": {
     "share": "Impressionante, né. Só vem!",
+    "theme": {
+      "activate_dark_mode": "Ative o modo escuro",
+      "activate_light_mode": "Ative o modo claro"
+    },
     "errors": {
       "something_is_all_gummed_up": "Isso veio do Paraguai",
       "lets_think_about_this_error": "Vamos refletir sobre este erro. Verifique o console do seu navegador para mais detalhes",
