@@ -20,6 +20,10 @@
   "404": {
     "you_are_too_late_this_page_is_no_more": "Tarde demais. Esse página já não está mais entre nós"
   },
+  "meta": {
+    "title": "Recreate your favorite meme online",
+    "description": "Know your meme generator, browse the most popular memes, create your owm meme like Drake Hotline Bling, Two Buttons, Change My Mind"
+  }, 
   "actions": {
     "share": "Impressionante, né. Só vem!",
     "errors": {

@@ -20,6 +20,10 @@
   "404": {
     "you_are_too_late_this_page_is_no_more": "You're too late, this page is no more"
   },
+  "meta": {
+    "title": "Recrie seu meme favorito online",
+    "description": "Conheça seu gerador de memes, navegue pelos memes mais populares, crie seu próprio meme como Drake Hotline Bling, Two Buttons, Change My Mind"
+  }, 
   "actions": {
     "share": "Impressive. So come on in!",
     "errors": {

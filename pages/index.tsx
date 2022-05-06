@@ -1,9 +1,9 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
+import { NextSeo } from 'next-seo';
 import { stringify } from 'qs';
 import Image from 'next/image';
-import Head from 'next/head';
 import axios from 'axios';
 import noop from 'lodash.noop';
 
@@ -152,7 +152,26 @@ export default function Home({
 
   return (
     <>
-      <Head>{t.heading.meme_generator}</Head>
+      <NextSeo
+        title={t.heading.meme_generator}
+        description={t.meta.description}
+        canonical={links.website}
+        openGraph={{
+          url: links.website,
+          type: 'website',
+          locale: 'en-CA',
+          title: t.meta.title,
+          description: t.meta.description,
+          images: [
+            {
+              url: `${links.website}/static/banner.png`,
+              alt: t.meta.title,
+              width: 1280,
+              height: 720,
+            },
+          ],
+        }}
+      />
 
       <Header />
 

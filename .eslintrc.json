@@ -71,6 +71,14 @@
       }
     ],
     "global-require": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.js"
+        ]
+      }
+    ],
     "quotes": "off",
     "jsx-a11y/anchor-is-valid": [
       "error",

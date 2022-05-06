@@ -1,3 +1,3 @@
 export const links = {
-  website: 'https://www.memegenerator.online/',
+  website: 'https://www.memegenerator.online',
 };
