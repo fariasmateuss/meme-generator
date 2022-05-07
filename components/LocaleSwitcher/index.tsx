@@ -1,5 +1,8 @@
 import { ChangeEvent, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import useSound from 'use-sound';
+
+import menuOpenSound from 'public/sounds/menu-open.mp3';
 
 import * as S from 'styles/components/LocaleSwitcher';
 
@@ -15,8 +18,18 @@ export function LocaleSwitcher() {
     [],
   );
 
+  const [play] = useSound(menuOpenSound);
+
+  const handleClick = () => {
+    play();
+  };
+
   return (
-    <S.Select onChange={changeLanguage} defaultValue={locale}>
+    <S.Select
+      onChange={changeLanguage}
+      onClick={handleClick}
+      defaultValue={locale}
+    >
       <option value="en">EN</option>
       <option value="pt">PT</option>
     </S.Select>

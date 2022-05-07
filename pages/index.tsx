@@ -1,9 +1,9 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
+import { NextSeo } from 'next-seo';
 import { stringify } from 'qs';
 import Image from 'next/image';
-import Head from 'next/head';
 import axios from 'axios';
 import noop from 'lodash.noop';
 
@@ -23,8 +23,6 @@ import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
 type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
-
-const loadingColorCss = 'var(--loading-color)';
 
 export async function getStaticProps() {
   try {
@@ -152,7 +150,26 @@ export default function Home({
 
   return (
     <>
-      <Head>{t.heading.meme_generator}</Head>
+      <NextSeo
+        title={t.heading.meme_generator}
+        description={t.meta.description}
+        canonical={links.website}
+        openGraph={{
+          url: links.website,
+          type: 'website',
+          locale: 'en-CA',
+          title: t.meta.title,
+          description: t.meta.description,
+          images: [
+            {
+              url: `${links.website}/static/banner.png`,
+              alt: t.meta.title,
+              width: 1280,
+              height: 720,
+            },
+          ],
+        }}
+      />
 
       <Header />
 
@@ -207,7 +224,9 @@ export default function Home({
               <S.Container>
                 <h2>{t.heading.pick_a_meme}</h2>
 
-                {isFetching && <ClipLoader size={25} color={loadingColorCss} />}
+                {isFetching && (
+                  <ClipLoader size={25} color="var(--loading-color)" />
+                )}
               </S.Container>
 
               <S.Carousel>
