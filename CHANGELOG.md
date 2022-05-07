@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/fariasmateuss/meme-generator/compare/v1.2.0...v1.3.0) (2022-05-07)
+
+
+### Features
+
+* add titleattribute to toggle theme button ([030d357](https://github.com/fariasmateuss/meme-generator/commit/030d357981933456d36233cd5e2e17c3323adcc5))
+* play sound when locales menu is opened ([7cd9850](https://github.com/fariasmateuss/meme-generator/commit/7cd98509a48ee26823375d8c62d65356d1fc5971))
+
 # [1.2.0](https://github.com/fariasmateuss/meme-generator/compare/v1.1.1...v1.2.0) (2022-05-02)
 
 
