@@ -6,8 +6,6 @@ import * as S from 'styles/components/Base/Button';
 
 import { ButtonProps } from './types';
 
-const loaderColorCss = 'var(--loader-color)';
-
 export function Button({
   children,
   loading,
@@ -15,7 +13,11 @@ export function Button({
 }: PropsWithChildren<ButtonProps>) {
   return (
     <S.Button id="ripple-button" onClick={handleClick} {...rest}>
-      {loading ? <PulseLoader color={loaderColorCss} size={10} /> : children}
+      {loading ? (
+        <PulseLoader color="var(--loader-color)" size={10} />
+      ) : (
+        children
+      )}
     </S.Button>
   );
 }

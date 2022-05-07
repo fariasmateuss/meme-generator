@@ -24,8 +24,6 @@ import * as S from 'styles/pages/Home';
 type Box = Template['box_count'];
 type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
 
-const loadingColorCss = 'var(--loading-color)';
-
 export async function getStaticProps() {
   try {
     const memes = await getMemes();
@@ -226,7 +224,9 @@ export default function Home({
               <S.Container>
                 <h2>{t.heading.pick_a_meme}</h2>
 
-                {isFetching && <ClipLoader size={25} color={loadingColorCss} />}
+                {isFetching && (
+                  <ClipLoader size={25} color="var(--loading-color)" />
+                )}
               </S.Container>
 
               <S.Carousel>
