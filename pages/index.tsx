@@ -235,14 +235,16 @@ export default function Home({
                     key={template.id}
                     onClick={() => handleSelectTemplate(template)}
                   >
-                    <img
+                    <Image
                       src={template.url}
                       alt={template.name}
                       title={template.name}
                       aria-label={template.name}
-                      className={`template 
-                      ${template.id === selectedTemplate?.id ? 'selected' : ''}
-                      `}
+                      width={130}
+                      height={130}
+                      layout="fixed"
+                      objectFit="cover"
+                      className="template"
                     />
                   </S.Slide>
                 ))}

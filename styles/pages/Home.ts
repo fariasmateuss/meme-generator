@@ -47,23 +47,16 @@ export const Carousel = styled.ul`
   height: 10rem;
   display: flex;
   align-items: center;
-  border-radius: 0.5rem;
-  overflow-y: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
 `;
 
 export const Slide = styled.li`
+  position: relative;
   margin-right: 0.5rem;
 
   .template {
-    width: auto;
-    height: 8rem;
     border-radius: 4px;
-    border: 2px solid transparent;
-
-    &.selected {
-      border-color: ${({ theme }) => theme.button.background};
-    }
   }
 `;
 
