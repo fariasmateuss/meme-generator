@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/fariasmateuss/meme-generator/compare/v1.3.0...v1.4.0) (2022-05-15)
+
+
+### Features
+
+* implement animate sparkle text ([5791561](https://github.com/fariasmateuss/meme-generator/commit/5791561197e89e86e62347cfc1ecf35283a937ac))
+* implement shimmer loading effect in Image component ([f1e7576](https://github.com/fariasmateuss/meme-generator/commit/f1e7576fe2c9914781d7203fbff85daad7717a58))
+
+
+### Performance Improvements
+
+* use Image component from next/image for image optimization ([b99b6a5](https://github.com/fariasmateuss/meme-generator/commit/b99b6a534119d6bb1844bdade099596ffe8974f3))
+
 # [1.3.0](https://github.com/fariasmateuss/meme-generator/compare/v1.2.0...v1.3.0) (2022-05-07)
 
 
