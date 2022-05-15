@@ -12,14 +12,16 @@ import { Button } from 'components/Base/Button';
 import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
-import { getMemes } from 'services/resources/getMemes';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
 import { Template, Meme } from 'shared/apiSchema';
+import { toBase64 } from 'utils/toBase64';
 import { links } from 'constants/links';
+import { getMemes } from 'services/resources/getMemes';
 import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
+import { Shimmer } from 'components/Shimmer';
 
 type Box = Template['box_count'];
 type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
@@ -184,6 +186,13 @@ export default function Home({
                 alt={selectedTemplate.name}
                 width={selectedTemplate.width}
                 height={selectedTemplate.height}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  Shimmer({
+                    w: selectedTemplate.width,
+                    h: selectedTemplate.height,
+                  }),
+                )}`}
                 className="generated"
                 quality={100}
               />
@@ -242,6 +251,10 @@ export default function Home({
                       aria-label={template.name}
                       width={130}
                       height={130}
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                        Shimmer({ w: 130, h: 130 }),
+                      )}`}
                       layout="fixed"
                       objectFit="cover"
                       className="template"
