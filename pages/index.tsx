@@ -9,14 +9,17 @@ import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
+import { Shimmer } from 'components/Shimmer';
+import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
-import { getMemes } from 'services/resources/getMemes';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
 import { Template, Meme } from 'shared/apiSchema';
+import { toBase64 } from 'utils/toBase64';
 import { links } from 'constants/links';
+import { getMemes } from 'services/resources/getMemes';
 import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
@@ -184,6 +187,13 @@ export default function Home({
                 alt={selectedTemplate.name}
                 width={selectedTemplate.width}
                 height={selectedTemplate.height}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  Shimmer({
+                    w: selectedTemplate.width,
+                    h: selectedTemplate.height,
+                  }),
+                )}`}
                 className="generated"
                 quality={100}
               />
@@ -214,7 +224,7 @@ export default function Home({
                   })
                 }
               >
-                {t.buttons.download}
+                <Sparkles>{t.buttons.download}</Sparkles>
               </Button>
             </>
           )}
@@ -235,14 +245,20 @@ export default function Home({
                     key={template.id}
                     onClick={() => handleSelectTemplate(template)}
                   >
-                    <img
+                    <Image
                       src={template.url}
                       alt={template.name}
                       title={template.name}
                       aria-label={template.name}
-                      className={`template 
-                      ${template.id === selectedTemplate?.id ? 'selected' : ''}
-                      `}
+                      width={130}
+                      height={130}
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                        Shimmer({ w: 130, h: 130 }),
+                      )}`}
+                      layout="fixed"
+                      objectFit="cover"
+                      className="template"
                     />
                   </S.Slide>
                 ))}
