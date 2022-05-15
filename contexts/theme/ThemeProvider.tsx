@@ -6,25 +6,26 @@ import { usePersistedState } from 'hooks/usePersistedState';
 import { ThemeDispatchProvider, ThemeStateProvider } from './ThemeContext';
 import { Theme } from './types';
 
+const QUERY = '(prefers-color-scheme: light)';
+
 export function ThemeContainer({ children }: PropsWithChildren<unknown>) {
   const [mode, setMode] = usePersistedState<Theme>(THEME_STORAGE_KEY, 'light');
 
   const onSelectMode = useCallback((mode: Theme) => {
-    setMode(mode === 'light' ? 'dark' : 'light');
+    const currentMode = mode === 'light';
+
+    setMode(currentMode ? 'dark' : 'light');
   }, []);
 
   useEffect(() => {
-    window
-      .matchMedia('(prefers-color-scheme: light)')
-      .addEventListener('change', e =>
-        onSelectMode(e.matches ? 'dark' : 'light'),
-      );
+    const mediaQueryList = window.matchMedia(QUERY);
+    const listener = (event: MediaQueryListEvent) => {
+      onSelectMode(event.matches ? 'dark' : 'light');
+    };
 
-    onSelectMode(
-      window.matchMedia('(prefers-color-scheme: light)').matches
-        ? 'dark'
-        : 'light',
-    );
+    mediaQueryList.addEventListener('change', listener);
+
+    onSelectMode(mediaQueryList.matches ? 'dark' : 'light');
   }, []);
 
   const themeState = useMemo(() => ({ mode }), [mode]);

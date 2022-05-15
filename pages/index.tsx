@@ -9,6 +9,8 @@ import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
+import { Shimmer } from 'components/Shimmer';
+import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
@@ -21,7 +23,6 @@ import { getMemes } from 'services/resources/getMemes';
 import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
-import { Shimmer } from 'components/Shimmer';
 
 type Box = Template['box_count'];
 type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
@@ -223,7 +224,7 @@ export default function Home({
                   })
                 }
               >
-                {t.buttons.download}
+                <Sparkles>{t.buttons.download}</Sparkles>
               </Button>
             </>
           )}

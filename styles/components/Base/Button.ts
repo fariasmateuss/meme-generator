@@ -1,9 +1,7 @@
 import { shade } from 'polished';
 import styled, { css } from 'styled-components';
 
-import RippleButton from 'components/RippleButton';
-
-export const Button = styled(RippleButton)`
+export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
