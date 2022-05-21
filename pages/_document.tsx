@@ -41,6 +41,12 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
+          <link
+            rel="preload"
+            href="/fonts/inter-var-latin.woff2"
+            as="font"
+            crossOrigin="anonymous"
+          />
 
           <link
             rel="icon"
