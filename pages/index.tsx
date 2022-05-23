@@ -1,10 +1,16 @@
-import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
+import {
+  FormEvent,
+  useState,
+  ChangeEvent,
+  useCallback,
+  useRef,
+  useEffect,
+} from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
 import { NextSeo } from 'next-seo';
 import { stringify } from 'qs';
 import Image from 'next/image';
-import axios from 'axios';
 import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
@@ -12,20 +18,21 @@ import { Button } from 'components/Base/Button';
 import { Shimmer } from 'components/Shimmer';
 import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
+import { Loading } from 'components/Loading';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
-import { Template, Meme } from 'shared/apiSchema';
 import { toBase64 } from 'utils/toBase64';
+import { download } from 'utils/download';
 import { links } from 'constants/links';
-import { getMemes } from 'services/resources/getMemes';
 import { api } from 'services/api';
+import { getMemes } from 'services/resources/getMemes';
+import { Template, Meme } from 'shared/apiSchema';
 
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
-type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
 
 export async function getStaticProps() {
   try {
@@ -56,13 +63,23 @@ export default function Home({
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
   const [loading, setLoading] = useState(false);
+  const [width, setWidth] = useState(0);
+
+  const carouselRef = useRef<HTMLDivElement>();
+
+  const share = useShare();
+
+  const { t } = useI18nState();
 
   const { addToast } = useToastsDispatch();
-  const { t } = useI18nState();
 
   const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
+
+  useEffect(() => {
+    setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
+  }, []);
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -117,33 +134,7 @@ export default function Home({
     setGeneratedMeme(null);
   }, []);
 
-  const handleDownloadGeneratedMeme = useCallback(
-    async ({ name, url }: DownloadGeneratedMeme) => {
-      try {
-        const payload = await axios(url, {
-          responseType: 'blob',
-        })
-          .then(response => response.data)
-          .catch(noop);
-
-        const generatedImage = URL.createObjectURL(payload);
-        const a = document.createElement('a');
-        a.href = generatedImage;
-        a.download = name;
-        a.click();
-      } catch {
-        addToast({
-          title: t.actions.errors.the_server_is_being_foolish,
-          description: t.actions.errors.lets_think_about_this_error,
-          type: 'error',
-        });
-      }
-    },
-    [addToast, t],
-  );
-
-  const share = useShare();
-  const shareGeneratedMeme = useCallback(() => {
+  const shareContent = useCallback(() => {
     share({
       url: generatedMeme.url,
       title: selectedTemplate.name,
@@ -209,7 +200,7 @@ export default function Home({
               <Button
                 type="button"
                 aria-label={t.buttons.share}
-                onClick={shareGeneratedMeme}
+                onClick={shareContent}
               >
                 {t.buttons.share}
               </Button>
@@ -218,10 +209,7 @@ export default function Home({
                 type="button"
                 aria-label={t.buttons.download}
                 onClick={() =>
-                  handleDownloadGeneratedMeme({
-                    url: generatedMeme.url,
-                    name: selectedTemplate.name,
-                  })
+                  download(generatedMeme.url, selectedTemplate.name)
                 }
               >
                 <Sparkles>{t.buttons.download}</Sparkles>
@@ -235,33 +223,40 @@ export default function Home({
                 <h2>{t.heading.pick_a_meme}</h2>
 
                 {isFetching && (
-                  <ClipLoader size={25} color="var(--loading-color)" />
+                  <Loading
+                    icon={ClipLoader}
+                    size={25}
+                    color="var(--loading-color)"
+                  />
                 )}
               </S.Container>
 
-              <S.Carousel>
-                {templates.map(template => (
-                  <S.Slide
-                    key={template.id}
-                    onClick={() => handleSelectTemplate(template)}
-                  >
-                    <Image
-                      src={template.url}
-                      alt={template.name}
-                      title={template.name}
-                      aria-label={template.name}
-                      width={130}
-                      height={130}
-                      placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                        Shimmer({ w: 130, h: 130 }),
-                      )}`}
-                      layout="fixed"
-                      objectFit="cover"
-                      className="template"
-                    />
-                  </S.Slide>
-                ))}
+              <S.Carousel ref={carouselRef}>
+                <S.Slide drag="x" dragConstraints={{ right: 0, left: -width }}>
+                  {templates.map(template => (
+                    <S.InnerItem
+                      key={template.id}
+                      layoutId={template.id}
+                      onClick={() => handleSelectTemplate(template)}
+                    >
+                      <Image
+                        src={template.url}
+                        alt={template.name}
+                        title={template.name}
+                        aria-label={template.name}
+                        width={130}
+                        height={130}
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                          Shimmer({ w: 130, h: 130 }),
+                        )}`}
+                        layout="fixed"
+                        objectFit="cover"
+                        className="template"
+                      />
+                    </S.InnerItem>
+                  ))}
+                </S.Slide>
               </S.Carousel>
 
               {selectedTemplate && (
