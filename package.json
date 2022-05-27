@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^0.26.0",
     "file-loader": "^6.2.0",
+    "framer-motion": "^6.3.3",
     "globby": "^11.0.1",
     "lodash.noop": "^3.0.1",
     "next": "^12.1.2",

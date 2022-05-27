@@ -1,5 +1,10 @@
+import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
+
+type CardContainer = {
+  width?: string;
+};
 
 export const Wrapper = styled.main`
   min-height: 100vh;
@@ -42,21 +47,26 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const Carousel = styled.ul`
+export const Carousel = styled(motion.div)`
   max-width: 100%;
   height: 10rem;
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
-  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-export const Slide = styled.li`
+export const Slide = styled(motion.ul)`
+  display: flex;
+  cursor: grab;
+`;
+
+export const InnerItem = styled(motion.li)`
   position: relative;
   margin-right: 0.5rem;
 
   .template {
     border-radius: 4px;
+    pointer-events: none;
   }
 `;
 
