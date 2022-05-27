@@ -12,8 +12,8 @@ const DynamicStylesProvider = dynamic(
   },
 );
 
-const DynamicStylesContainer = dynamic(
-  () => import('./theme/ThemeProvider').then(mod => mod.ThemeContainer),
+const DynamicThemeProvider = dynamic(
+  () => import('./theme/ThemeProvider').then(mod => mod.ThemeProvider),
   {
     ssr: false,
   },
@@ -23,7 +23,7 @@ export function AppProvider({ children }: PropsWithChildren<unknown>) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <DynamicStylesContainer>
+    <DynamicThemeProvider>
       <DynamicStylesProvider>
         <ToastsProvider>
           <QueryClientProvider client={queryClient}>
@@ -31,6 +31,6 @@ export function AppProvider({ children }: PropsWithChildren<unknown>) {
           </QueryClientProvider>
         </ToastsProvider>
       </DynamicStylesProvider>
-    </DynamicStylesContainer>
+    </DynamicThemeProvider>
   );
 }

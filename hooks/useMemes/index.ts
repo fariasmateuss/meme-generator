@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { getMemes } from 'services/resources/getMemes';
+import { getMemes } from 'lib/imgflip';
 import { Template } from 'shared/apiSchema';
 
 export const GET_MEMES_QUERY_KEY = 'memes';

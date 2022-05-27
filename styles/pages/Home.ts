@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
 
+type CardContainer = {
+  width?: string;
+};
+
 export const Wrapper = styled.main`
   min-height: 100vh;
   display: flex;

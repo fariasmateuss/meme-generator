@@ -10,29 +10,28 @@ import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
 import { NextSeo } from 'next-seo';
 import { stringify } from 'qs';
-import Image from 'next/image';
-import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
-import { Shimmer } from 'components/Shimmer';
 import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
 import { Loading } from 'components/Loading';
+import { Image } from 'components/Base/Image';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
+import { useCaptionMeme } from 'hooks/useCaptionMeme';
+import { useDownloadImage } from 'hooks/useDownloadImage';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
-import { toBase64 } from 'utils/toBase64';
-import { download } from 'utils/download';
 import { links } from 'constants/links';
-import { api } from 'services/api';
-import { getMemes } from 'services/resources/getMemes';
+import { getMemes } from 'lib/imgflip';
 import { Template, Meme } from 'shared/apiSchema';
 
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
+
+type Image = Pick<Template, 'url' | 'name'>;
 
 export async function getStaticProps() {
   try {
@@ -57,12 +56,9 @@ export async function getStaticProps() {
 export default function Home({
   memes,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
-    null,
-  );
-  const [boxes, setBoxes] = useState<Box[]>([]);
+  const [template, setTemplate] = useState<Template | null>(null);
   const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [boxes, setBoxes] = useState<Box[]>([]);
   const [width, setWidth] = useState(0);
 
   const carouselRef = useRef<HTMLDivElement>();
@@ -76,6 +72,11 @@ export default function Home({
   const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
+
+  const { mutate: captionMeme, isLoading: isCaptioning } = useCaptionMeme();
+
+  const { mutate: downloadImage, isLoading: isDownloading } =
+    useDownloadImage();
 
   useEffect(() => {
     setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
@@ -91,45 +92,39 @@ export default function Home({
   );
 
   const handleSelectTemplate = useCallback((template: Template) => {
-    setSelectedTemplate(template);
+    setTemplate(template);
     setBoxes([]);
   }, []);
 
-  const handleCaptionToTemplate = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const params = stringify({
-        template_id: selectedTemplate.id,
+      const url = stringify({
+        template_id: template.id,
         username: process.env.NEXT_PUBLIC_IMGFLIP_USER_ID,
         password: process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD,
         boxes: boxes.map(text => ({ text })),
       });
 
-      try {
-        setLoading(true);
-
-        const payload = await api
-          .post(`/caption_image?${params}`)
-          .then(response => response.data.data)
-          .catch(noop);
-
-        setGeneratedMeme(payload);
-      } catch {
-        addToast({
-          title: t.actions.errors.the_API_is_being_wiggly,
-          description: t.actions.errors.lets_think_about_this_error,
-          type: 'error',
-        });
-      } finally {
-        setLoading(false);
-      }
+      captionMeme(url, {
+        onError: () => {
+          addToast({
+            title: t.actions.errors.the_API_is_being_wiggly,
+            description: t.actions.errors.lets_think_about_this_error,
+            type: 'error',
+          });
+        },
+        onSuccess: data => {
+          setGeneratedMeme(data);
+        },
+      });
     },
-    [selectedTemplate, boxes, loading, addToast, t],
+    [template, boxes, addToast, t],
   );
 
   const handleReset = useCallback(() => {
-    setSelectedTemplate(null);
+    setTemplate(null);
     setBoxes([]);
     setGeneratedMeme(null);
   }, []);
@@ -137,10 +132,31 @@ export default function Home({
   const shareContent = useCallback(() => {
     share({
       url: generatedMeme.url,
-      title: selectedTemplate.name,
+      title: template.name,
       text: `${links.website} ${t.actions.share}`,
     });
-  }, [generatedMeme, selectedTemplate, share, t]);
+  }, [generatedMeme, template, share, t]);
+
+  const handleDownload = useCallback(({ name, url }: Image) => {
+    downloadImage(url, {
+      onError: () => {
+        addToast({
+          title: t.actions.errors.the_API_is_being_wiggly,
+          description: t.actions.errors.lets_think_about_this_error,
+          type: 'error',
+        });
+      },
+      onSuccess: data => {
+        const url = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.setAttribute('download', name);
+        document.body.appendChild(link);
+        link.click();
+      },
+    });
+  }, []);
 
   return (
     <>
@@ -175,16 +191,9 @@ export default function Home({
             <>
               <Image
                 src={generatedMeme.url}
-                alt={selectedTemplate.name}
-                width={selectedTemplate.width}
-                height={selectedTemplate.height}
-                placeholder="blur"
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                  Shimmer({
-                    w: selectedTemplate.width,
-                    h: selectedTemplate.height,
-                  }),
-                )}`}
+                alt={template.name}
+                width={template.width}
+                height={template.height}
                 className="generated"
                 quality={100}
               />
@@ -208,8 +217,13 @@ export default function Home({
               <Button
                 type="button"
                 aria-label={t.buttons.download}
+                disabled={isDownloading}
+                loading={isDownloading}
                 onClick={() =>
-                  download(generatedMeme.url, selectedTemplate.name)
+                  handleDownload({
+                    url: generatedMeme.url,
+                    name: template.name,
+                  })
                 }
               >
                 <Sparkles>{t.buttons.download}</Sparkles>
@@ -246,10 +260,6 @@ export default function Home({
                         aria-label={template.name}
                         width={130}
                         height={130}
-                        placeholder="blur"
-                        blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                          Shimmer({ w: 130, h: 130 }),
-                        )}`}
                         layout="fixed"
                         objectFit="cover"
                         className="template"
@@ -259,25 +269,23 @@ export default function Home({
                 </S.Slide>
               </S.Carousel>
 
-              {selectedTemplate && (
+              {template && (
                 <>
                   <h2>{t.heading.customize_your_own}</h2>
-                  <S.Form onSubmit={handleCaptionToTemplate}>
-                    {new Array(selectedTemplate.box_count)
-                      .fill('')
-                      .map((_, index) => (
-                        <input
-                          key={String(Math.random())}
-                          placeholder={`${t.fields.placeholder} #${index + 1}`}
-                          onChange={e => handleInputChange(e, index)}
-                        />
-                      ))}
+                  <S.Form onSubmit={onSubmit}>
+                    {new Array(template.box_count).fill('').map((_, index) => (
+                      <input
+                        key={String(Math.random())}
+                        placeholder={`${t.fields.placeholder} #${index + 1}`}
+                        onChange={e => handleInputChange(e, index)}
+                      />
+                    ))}
 
                     <Button
                       type="submit"
                       aria-label={t.buttons.generate}
-                      loading={loading}
-                      disabled={loading}
+                      loading={isCaptioning}
+                      disabled={isCaptioning}
                     >
                       {t.buttons.generate}
                     </Button>
