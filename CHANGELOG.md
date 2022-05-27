@@ -1,3 +1,18 @@
+# [1.5.0](https://github.com/fariasmateuss/meme-generator/compare/v1.4.0...v1.5.0) (2022-05-27)
+
+
+### Features
+
+* add custom font using [@font-face](https://github.com/font-face) ([28cb813](https://github.com/fariasmateuss/meme-generator/commit/28cb8131c96032f00bf07198e0dbb63af734c981))
+* fetch and mutate data from custom hook that uses React Query ([fe7bfe3](https://github.com/fariasmateuss/meme-generator/commit/fe7bfe366a60d040fcbea9ebac5729e90cb8e323))
+* implement carousel slider with framer motion ([b6bf842](https://github.com/fariasmateuss/meme-generator/commit/b6bf8421e9647977af974ee37b831903640aa7fb))
+* implement Loading component ([dc48637](https://github.com/fariasmateuss/meme-generator/commit/dc486371f639d7c859d5eb71926dc3fa5dc0d79a))
+
+
+### Performance Improvements
+
+* preload the font in the page tag for optimal performance ([aa560ba](https://github.com/fariasmateuss/meme-generator/commit/aa560ba05aeef45549f81ce8968878097075123f))
+
 # [1.4.0](https://github.com/fariasmateuss/meme-generator/compare/v1.3.0...v1.4.0) (2022-05-15)
 
 
