@@ -41,11 +41,11 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
+
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
-            rel="preload"
-            href="/fonts/inter-var-latin.woff2"
-            as="font"
-            crossOrigin="anonymous"
+            href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet"
           />
 
           <link
