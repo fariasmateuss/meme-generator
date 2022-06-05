@@ -11,9 +11,4 @@ export type Template = {
 
 export type Meme = {
   url: string;
-  page_url: string;
-};
-
-export type ErrorResponse = {
-  error_message: string;
 };

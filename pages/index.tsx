@@ -1,37 +1,31 @@
-import {
-  FormEvent,
-  useState,
-  ChangeEvent,
-  useCallback,
-  useRef,
-  useEffect,
-} from 'react';
+import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { ClipLoader } from 'react-spinners';
 import { NextSeo } from 'next-seo';
 import { stringify } from 'qs';
+import Image from 'next/image';
+import axios from 'axios';
+import noop from 'lodash.noop';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
+import { Shimmer } from 'components/Shimmer';
 import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
-import { Loading } from 'components/Loading';
-import { Image } from 'components/Base/Image';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
-import { useCaptionMeme } from 'hooks/useCaptionMeme';
-import { useDownloadImage } from 'hooks/useDownloadImage';
 import { useMemes } from 'hooks/useMemes';
 import { useShare } from 'hooks/useShare';
-import { links } from 'constants/links';
-import { getMemes } from 'lib/imgflip';
 import { Template, Meme } from 'shared/apiSchema';
+import { toBase64 } from 'utils/toBase64';
+import { links } from 'constants/links';
+import { getMemes } from 'services/resources/getMemes';
+import { api } from 'services/api';
 
 import * as S from 'styles/pages/Home';
 
 type Box = Template['box_count'];
-
-type Image = Pick<Template, 'url' | 'name'>;
+type DownloadGeneratedMeme = Pick<Template, 'url' | 'name'>;
 
 export async function getStaticProps() {
   try {
@@ -56,31 +50,19 @@ export async function getStaticProps() {
 export default function Home({
   memes,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [template, setTemplate] = useState<Template | null>(null);
-  const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
+    null,
+  );
   const [boxes, setBoxes] = useState<Box[]>([]);
-  const [width, setWidth] = useState(0);
-
-  const carouselRef = useRef<HTMLDivElement>();
-
-  const share = useShare();
-
-  const { t } = useI18nState();
+  const [generatedMeme, setGeneratedMeme] = useState<Meme | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const { addToast } = useToastsDispatch();
+  const { t } = useI18nState();
 
   const { data: templates, isFetching } = useMemes({
     initialData: memes,
   });
-
-  const { mutate: captionMeme, isLoading: isCaptioning } = useCaptionMeme();
-
-  const { mutate: downloadImage, isLoading: isDownloading } =
-    useDownloadImage();
-
-  useEffect(() => {
-    setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
-  }, []);
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -92,71 +74,82 @@ export default function Home({
   );
 
   const handleSelectTemplate = useCallback((template: Template) => {
-    setTemplate(template);
+    setSelectedTemplate(template);
     setBoxes([]);
   }, []);
 
-  const onSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
+  const handleCaptionToTemplate = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const url = stringify({
-        template_id: template.id,
+      const params = stringify({
+        template_id: selectedTemplate.id,
         username: process.env.NEXT_PUBLIC_IMGFLIP_USER_ID,
         password: process.env.NEXT_PUBLIC_IMGFLIP_PASSWORD,
         boxes: boxes.map(text => ({ text })),
       });
 
-      captionMeme(url, {
-        onError: () => {
-          addToast({
-            title: t.actions.errors.the_API_is_being_wiggly,
-            description: t.actions.errors.lets_think_about_this_error,
-            type: 'error',
-          });
-        },
-        onSuccess: data => {
-          setGeneratedMeme(data);
-        },
-      });
-    },
-    [template, boxes, addToast, t],
-  );
+      try {
+        setLoading(true);
 
-  const handleReset = useCallback(() => {
-    setTemplate(null);
-    setBoxes([]);
-    setGeneratedMeme(null);
-  }, []);
+        const payload = await api
+          .post(`/caption_image?${params}`)
+          .then(response => response.data.data)
+          .catch(noop);
 
-  const shareContent = useCallback(() => {
-    share({
-      url: generatedMeme.url,
-      title: template.name,
-      text: `${links.website} ${t.actions.share}`,
-    });
-  }, [generatedMeme, template, share, t]);
-
-  const handleDownload = useCallback(({ name, url }: Image) => {
-    downloadImage(url, {
-      onError: () => {
+        setGeneratedMeme(payload);
+      } catch {
         addToast({
           title: t.actions.errors.the_API_is_being_wiggly,
           description: t.actions.errors.lets_think_about_this_error,
           type: 'error',
         });
-      },
-      onSuccess: data => {
-        const url = window.URL.createObjectURL(new Blob([data]));
-        const link = document.createElement('a');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [selectedTemplate, boxes, loading, addToast, t],
+  );
 
-        link.href = url;
-        link.setAttribute('download', name);
-        document.body.appendChild(link);
-        link.click();
-      },
-    });
+  const handleReset = useCallback(() => {
+    setSelectedTemplate(null);
+    setBoxes([]);
+    setGeneratedMeme(null);
   }, []);
+
+  const handleDownloadGeneratedMeme = useCallback(
+    async ({ name, url }: DownloadGeneratedMeme) => {
+      try {
+        const payload = await axios(url, {
+          responseType: 'blob',
+        })
+          .then(response => response.data)
+          .catch(noop);
+
+        const generatedImage = URL.createObjectURL(payload);
+        const a = document.createElement('a');
+        a.href = generatedImage;
+        a.download = name;
+        a.click();
+      } catch {
+        addToast({
+          title: t.actions.errors.the_server_is_being_foolish,
+          description: t.actions.errors.lets_think_about_this_error,
+          type: 'error',
+        });
+      }
+    },
+    [addToast, t],
+  );
+
+  const share = useShare();
+  const shareGeneratedMeme = useCallback(() => {
+    share({
+      url: generatedMeme.url,
+      title: selectedTemplate.name,
+      text: `${links.website} ${t.actions.share}`,
+    });
+  }, [generatedMeme, selectedTemplate, share, t]);
 
   return (
     <>
@@ -191,9 +184,16 @@ export default function Home({
             <>
               <Image
                 src={generatedMeme.url}
-                alt={template.name}
-                width={template.width}
-                height={template.height}
+                alt={selectedTemplate.name}
+                width={selectedTemplate.width}
+                height={selectedTemplate.height}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  Shimmer({
+                    w: selectedTemplate.width,
+                    h: selectedTemplate.height,
+                  }),
+                )}`}
                 className="generated"
                 quality={100}
               />
@@ -209,7 +209,7 @@ export default function Home({
               <Button
                 type="button"
                 aria-label={t.buttons.share}
-                onClick={shareContent}
+                onClick={shareGeneratedMeme}
               >
                 {t.buttons.share}
               </Button>
@@ -217,12 +217,10 @@ export default function Home({
               <Button
                 type="button"
                 aria-label={t.buttons.download}
-                disabled={isDownloading}
-                loading={isDownloading}
                 onClick={() =>
-                  handleDownload({
+                  handleDownloadGeneratedMeme({
                     url: generatedMeme.url,
-                    name: template.name,
+                    name: selectedTemplate.name,
                   })
                 }
               >
@@ -237,55 +235,54 @@ export default function Home({
                 <h2>{t.heading.pick_a_meme}</h2>
 
                 {isFetching && (
-                  <Loading
-                    icon={ClipLoader}
-                    size={25}
-                    color="var(--loading-color)"
-                  />
+                  <ClipLoader size={25} color="var(--loading-color)" />
                 )}
               </S.Container>
 
-              <S.Carousel ref={carouselRef}>
-                <S.Slide drag="x" dragConstraints={{ right: 0, left: -width }}>
-                  {templates.map(template => (
-                    <S.InnerItem
-                      key={template.id}
-                      layoutId={template.id}
-                      onClick={() => handleSelectTemplate(template)}
-                    >
-                      <Image
-                        src={template.url}
-                        alt={template.name}
-                        title={template.name}
-                        aria-label={template.name}
-                        width={130}
-                        height={130}
-                        layout="fixed"
-                        objectFit="cover"
-                        className="template"
-                      />
-                    </S.InnerItem>
-                  ))}
-                </S.Slide>
+              <S.Carousel>
+                {templates.map(template => (
+                  <S.Slide
+                    key={template.id}
+                    onClick={() => handleSelectTemplate(template)}
+                  >
+                    <Image
+                      src={template.url}
+                      alt={template.name}
+                      title={template.name}
+                      aria-label={template.name}
+                      width={130}
+                      height={130}
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                        Shimmer({ w: 130, h: 130 }),
+                      )}`}
+                      layout="fixed"
+                      objectFit="cover"
+                      className="template"
+                    />
+                  </S.Slide>
+                ))}
               </S.Carousel>
 
-              {template && (
+              {selectedTemplate && (
                 <>
                   <h2>{t.heading.customize_your_own}</h2>
-                  <S.Form onSubmit={onSubmit}>
-                    {new Array(template.box_count).fill('').map((_, index) => (
-                      <input
-                        key={String(Math.random())}
-                        placeholder={`${t.fields.placeholder} #${index + 1}`}
-                        onChange={e => handleInputChange(e, index)}
-                      />
-                    ))}
+                  <S.Form onSubmit={handleCaptionToTemplate}>
+                    {new Array(selectedTemplate.box_count)
+                      .fill('')
+                      .map((_, index) => (
+                        <input
+                          key={String(Math.random())}
+                          placeholder={`${t.fields.placeholder} #${index + 1}`}
+                          onChange={e => handleInputChange(e, index)}
+                        />
+                      ))}
 
                     <Button
                       type="submit"
                       aria-label={t.buttons.generate}
-                      loading={isCaptioning}
-                      disabled={isCaptioning}
+                      loading={loading}
+                      disabled={loading}
                     >
                       {t.buttons.generate}
                     </Button>

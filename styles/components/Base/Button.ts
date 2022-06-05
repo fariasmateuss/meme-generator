@@ -19,6 +19,10 @@ export const Button = styled.button`
 
   transition: background-color 200ms;
 
+  &:hover {
+    background-color: ${({ theme }) => shade(0.2, theme.button.background)};
+  }
+
   &:not(:last-child) {
     margin: 0.68rem 0;
   }
