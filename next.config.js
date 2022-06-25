@@ -1,6 +1,5 @@
 module.exports = {
   reactStrictMode: true,
-  swcMinify: true,
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.(mp3)$/,
