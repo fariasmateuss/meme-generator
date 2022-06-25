@@ -3,12 +3,3 @@ export type SparklesProps = {
     [x: string]: string;
   };
 };
-
-export type SparkleProps = {
-  color: string;
-  size: number;
-  style: {
-    top: string;
-    left: string;
-  };
-};

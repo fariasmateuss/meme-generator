@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint-code-style": "eslint . --ext=.js,.ts,.tsx --fix",
-    "lint-code-format": "prettier --write **/*.{ts,js,jsx,tsx}",
+    "lint-code-format": "prettier --write **/*.{ts,js,tsx}",
     "lint-check-types": "tsc --noEmit",
     "linter": "yarn lint-code-style && yarn lint-check-types && yarn lint-code-format",
     "ci": "yarn install",

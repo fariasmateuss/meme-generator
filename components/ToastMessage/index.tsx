@@ -1,23 +1,12 @@
-import {
-  useCallback,
-  useMemo,
-  useEffect,
-  ComponentType,
-  CSSProperties,
-} from 'react';
+import { useCallback, useMemo, useEffect, ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FiX } from 'react-icons/fi';
 
-import { ToastMessageData } from 'shared/toasts';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 import { icons, REMOVE_TOAST_TIMEOUT } from 'constants/toastMessage';
 
-import * as S from 'styles/components/ToastMessage';
-
-type ToastMessageProps = {
-  message: ToastMessageData;
-  style?: CSSProperties;
-};
+import { ToastMessageProps } from './types';
+import * as S from './styles';
 
 export function ToastMessage({ message, style }: ToastMessageProps) {
   const { removeToast } = useToastsDispatch();

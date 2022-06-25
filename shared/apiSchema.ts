@@ -8,12 +8,3 @@ export type Template = {
     [key: number]: string;
   };
 };
-
-export type Meme = {
-  url: string;
-  page_url: string;
-};
-
-export type ErrorResponse = {
-  error_message: string;
-};

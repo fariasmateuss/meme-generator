@@ -1,9 +1,15 @@
-import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
 
-import { captionMeme } from 'lib/imgflip';
-import { Meme, ErrorResponse } from 'shared/apiSchema';
+import { api } from 'config/client';
+
+import { CaptionMeme } from './types';
+
+async function captionMeme(url: string) {
+  return api
+    .post<CaptionMeme>(`/caption_image?${url}`)
+    .then(response => response.data.data.url);
+}
 
 export function useCaptionMeme() {
-  return useMutation<Meme, AxiosError<ErrorResponse>, string>(captionMeme);
+  return useMutation(captionMeme);
 }

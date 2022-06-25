@@ -8,7 +8,7 @@ import { useI18nState } from 'contexts/i18n/I18Context';
 import switchOnSound from 'public/sounds/switch-on.mp3';
 import switchOffSound from 'public/sounds/switch-off.mp3';
 
-import * as S from 'styles/components/ToggleTheme';
+import * as S from './styles';
 
 export function ToggleTheme() {
   const { onSelectMode } = useThemeDispatch();

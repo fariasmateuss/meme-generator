@@ -14,20 +14,14 @@ const comeInOut = keyframes`
   }
 `;
 
-export const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
+const spin = keyframes`
+0% {
+  transform: rotate(0deg);
+}
 
-  100% {
-    transform: rotate(180deg);
-  }
-`;
-
-export const Wrapper = styled.span`
-  display: inline-block;
-  position: relative;
-  width: inherit;
+100% {
+  transform: rotate(180deg);
+}
 `;
 
 export const SparkleWrapper = styled.span`
@@ -39,10 +33,4 @@ export const SparkleWrapper = styled.span`
 export const SparkleSvg = styled.svg`
   display: block;
   animation: ${spin} 1000ms linear;
-`;
-
-export const ChildWrapper = styled.strong`
-  position: relative;
-  z-index: 1;
-  font-weight: bold;
 `;

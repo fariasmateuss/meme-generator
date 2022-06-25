@@ -2,9 +2,9 @@ import { PropsWithChildren } from 'react';
 import { PulseLoader } from 'react-spinners';
 
 import { Loading } from 'components/Loading';
-import * as S from 'styles/components/Base/Button';
 
 import { ButtonProps } from './types';
+import * as S from './styles';
 
 export function Button({
   children,
