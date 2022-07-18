@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 import { Loading } from 'components/Loading';
 
@@ -11,10 +12,12 @@ export function Button({
   loading,
   ...rest
 }: PropsWithChildren<ButtonProps>) {
+  const theme = useTheme();
+
   return (
     <S.Button {...rest}>
       {loading ? (
-        <Loading icon={PulseLoader} color="var(--loader-color)" size={10} />
+        <Loading icon={PulseLoader} color={theme.text} size={10} />
       ) : (
         children
       )}

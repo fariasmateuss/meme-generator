@@ -3,6 +3,8 @@ import useSound from 'use-sound';
 import { MdLightMode, MdModeNight } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
+import { useTheme } from 'styled-components';
+
 import { useThemeDispatch, useThemeState } from 'contexts/theme/ThemeContext';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import switchOnSound from 'public/sounds/switch-on.mp3';
@@ -15,15 +17,15 @@ export function ToggleTheme() {
   const { mode } = useThemeState();
   const { t } = useI18nState();
 
+  const theme = useTheme();
+
   const isDarkMode = mode === 'dark';
 
   const iconTitle = isDarkMode
     ? t.actions.theme.activate_light_mode
     : t.actions.theme.activate_dark_mode;
 
-  const iconColor = isDarkMode
-    ? 'var(--night-mode-color)'
-    : 'var(--light-mode-color)';
+  const iconColor = theme.toggleMode;
 
   const [play] = useSound(isDarkMode ? switchOnSound : switchOffSound);
 

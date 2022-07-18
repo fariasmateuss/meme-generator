@@ -13,27 +13,25 @@ export function Form({
   const { t } = useI18nState();
 
   return (
-    <>
+    <S.Wrapper onSubmit={onSubmit}>
       <h2>{t.heading.customize_your_own}</h2>
 
-      <S.Wrapper onSubmit={onSubmit}>
-        {new Array(template.box_count).fill('').map((_, index) => (
-          <input
-            key={String(Math.random())}
-            placeholder={`${t.fields.placeholder} #${index + 1}`}
-            onChange={e => onInputChange(e, index)}
-          />
-        ))}
+      {new Array(template.box_count).fill('').map((_, index) => (
+        <input
+          key={String(Math.random())}
+          placeholder={`${t.fields.placeholder} #${index + 1}`}
+          onChange={e => onInputChange(e, index)}
+        />
+      ))}
 
-        <Button
-          type="submit"
-          aria-label={t.buttons.generate}
-          loading={loading}
-          disabled={loading}
-        >
-          {t.buttons.generate}
-        </Button>
-      </S.Wrapper>
-    </>
+      <Button
+        type="submit"
+        aria-label={t.buttons.generate}
+        loading={loading}
+        disabled={loading}
+      >
+        {t.buttons.generate}
+      </Button>
+    </S.Wrapper>
   );
 }

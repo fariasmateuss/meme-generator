@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.div)`
   max-width: 100%;
-  height: 10rem;
   display: flex;
   align-items: center;
   overflow-x: hidden;

@@ -1,6 +1,7 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { stringify } from 'qs';
+import { useTheme } from 'styled-components';
 
 import { Logo } from 'components/Logo';
 import { Button } from 'components/Base/Button';
@@ -28,8 +29,6 @@ export function HomePage({ templates }: HomeProps) {
   const [generatedMeme, setGeneratedMeme] = useState<string | null>(null);
   const [boxes, setBoxes] = useState<Box[]>([]);
 
-  const share = useShare();
-
   const { t } = useI18nState();
 
   const { addToast } = useToastsDispatch();
@@ -41,6 +40,10 @@ export function HomePage({ templates }: HomeProps) {
   const { mutate: captionMeme, isLoading: isCaptioning } = useCaptionMeme();
 
   const { mutate: downloadFile, isLoading: isDownloading } = useDownloadFile();
+
+  const color = useTheme();
+
+  const share = useShare();
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -174,11 +177,7 @@ export function HomePage({ templates }: HomeProps) {
               <h2>{t.heading.pick_a_meme}</h2>
 
               {isFetching && (
-                <Loading
-                  icon={ClipLoader}
-                  size={25}
-                  color="var(--loading-color)"
-                />
+                <Loading icon={ClipLoader} size={25} color={color.loading} />
               )}
             </S.Heading>
 

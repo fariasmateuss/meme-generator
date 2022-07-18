@@ -1,6 +1,17 @@
 import styled, { css } from 'styled-components';
+import media from 'styled-media-query';
 
 export const Wrapper = styled.form`
+  h2 {
+    font-size: 1.35rem;
+    margin: 0.5rem 0 0.5rem;
+    color: ${({ theme }) => theme.heading};
+
+    ${media.lessThan('small')`
+      font-size: 1.25rem;
+    `}
+  }
+
   input {
     width: 100%;
     height: 2.5rem;

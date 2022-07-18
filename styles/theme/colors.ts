@@ -13,6 +13,7 @@ export const light = {
   danger: '#c53030',
   disabled: '#666360',
   loading: '#2e384d',
+  toggleMode: '#F9B52A',
   button: {
     background: '#4395D8',
     color: '#ffffff',
@@ -25,6 +26,7 @@ export const dark: typeof light = {
   modal: '#444444',
   alto: '#dbdbdb',
   heading: '#ffffff',
+  toggleMode: '#C5CFDC',
   input: {
     color: '#ffffff',
     borderColor: '#5a5a5a',
