@@ -1,8 +1,6 @@
-import NextImage from 'next/image';
+import NextImage, { ImageProps } from 'next/image';
 
 import { toBase64 } from 'utils/toBase64';
-
-import { Props } from './types';
 
 export const shimmer = (width: string | number, height: string | number) => `
 <svg width="${width}" height="${height}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -18,23 +16,21 @@ export const shimmer = (width: string | number, height: string | number) => `
   <animate xlink:href="#r" attributeName="x" from="-${width}" to="${width}" dur="1s" repeatCount="indefinite"  />
 </svg>`;
 
-export function Image({ src, noRounded, width, height, ...rest }: Props) {
+export function Image({ src, width, height, ...rest }: ImageProps) {
   const isStatic = typeof src !== `string`;
 
   return (
-    <div className={`${!noRounded && `next-image`}`}>
-      <NextImage
-        src={src}
-        width={width}
-        height={height}
-        blurDataURL={
-          isStatic
-            ? `data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`
-            : src
-        }
-        placeholder="blur"
-        {...rest}
-      />
-    </div>
+    <NextImage
+      src={src}
+      width={width}
+      height={height}
+      blurDataURL={
+        isStatic
+          ? `data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`
+          : src
+      }
+      placeholder="blur"
+      {...rest}
+    />
   );
 }

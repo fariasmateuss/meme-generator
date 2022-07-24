@@ -51,7 +51,7 @@ export function Sparkles({
   });
 
   return (
-    <S.Wrapper {...delegated}>
+    <S.Container {...delegated}>
       {sparkles.map(sparkle => (
         <Sparkle
           key={sparkle.id}
@@ -61,7 +61,7 @@ export function Sparkles({
         />
       ))}
 
-      <S.Wrapper>{children}</S.Wrapper>
-    </S.Wrapper>
+      <S.Wrap>{children}</S.Wrap>
+    </S.Container>
   );
 }

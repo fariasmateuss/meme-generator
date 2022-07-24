@@ -1,4 +1,5 @@
 import { FormEvent, useState, ChangeEvent, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ClipLoader } from 'react-spinners';
 import { stringify } from 'qs';
 import { useTheme } from 'styled-components';
@@ -10,8 +11,6 @@ import { Header } from 'components/Layout/Header';
 import { Container } from 'components/Layout/Container';
 import { Loading } from 'components/Loading';
 import { Image } from 'components/Base/Image';
-import { Form } from 'components/Form';
-import { Carousel } from 'components/Carousel';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 import { useCaptionMeme } from 'hooks/useCaptionMeme';
@@ -21,6 +20,8 @@ import { useShare } from 'hooks/useShare';
 import { links } from 'constants/links';
 import { Template } from 'shared/apiSchema';
 
+import { Carousel } from './Carousel';
+import { FORM_ANIMATION } from './animations';
 import { HomeProps, Box, DownloadFile } from './types';
 import * as S from './styles';
 
@@ -29,21 +30,16 @@ export function HomePage({ templates }: HomeProps) {
   const [generatedMeme, setGeneratedMeme] = useState<string | null>(null);
   const [boxes, setBoxes] = useState<Box[]>([]);
 
+  const color = useTheme();
+  const share = useShare();
+
   const { t } = useI18nState();
-
   const { addToast } = useToastsDispatch();
-
   const { data, isFetching } = useMemes({
     initialData: templates,
   });
-
   const { mutate: captionMeme, isLoading: isCaptioning } = useCaptionMeme();
-
   const { mutate: downloadFile, isLoading: isDownloading } = useDownloadFile();
-
-  const color = useTheme();
-
-  const share = useShare();
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -128,74 +124,92 @@ export function HomePage({ templates }: HomeProps) {
       <S.Wrapper>
         <Logo />
 
-        {generatedMeme && (
-          <Container variant="auto">
-            <Image
-              src={generatedMeme}
-              alt={template.name}
-              width={template.width}
-              height={template.height}
-              quality={100}
-            />
-
-            <Button
-              type="reset"
-              aria-label={t.buttons.generate_new}
-              onClick={handleReset}
-            >
-              {t.buttons.generate_new}
-            </Button>
-
-            <Button
-              type="button"
-              aria-label={t.buttons.share}
-              onClick={handleShareContent}
-            >
-              {t.buttons.share}
-            </Button>
-
-            <Button
-              type="button"
-              aria-label={t.buttons.download}
-              disabled={isDownloading}
-              loading={isDownloading}
-              onClick={() =>
-                handleDownloadFile({
-                  url: generatedMeme,
-                  name: template.name,
-                })
-              }
-            >
-              <Sparkles>{t.buttons.download}</Sparkles>
-            </Button>
-          </Container>
-        )}
-
-        {!generatedMeme && (
-          <Container variant="full">
-            <S.Heading>
-              <h2>{t.heading.pick_a_meme}</h2>
-
-              {isFetching && (
-                <Loading icon={ClipLoader} size={25} color={color.loading} />
-              )}
-            </S.Heading>
-
-            <Carousel
-              templates={data}
-              onSeletedTemplate={handleSelectTemplate}
-            />
-
-            {template && (
-              <Form
-                template={template}
-                loading={isCaptioning}
-                onSubmit={handleSubmit}
-                onInputChange={handleInputChange}
+        <AnimatePresence>
+          {generatedMeme && (
+            <Container variant="auto">
+              <Image
+                src={generatedMeme}
+                alt={template.name}
+                width={template.width}
+                height={template.height}
+                quality={100}
               />
-            )}
-          </Container>
-        )}
+
+              <Button
+                type="reset"
+                aria-label={t.buttons.generate_new}
+                onClick={handleReset}
+              >
+                {t.buttons.generate_new}
+              </Button>
+
+              <Button
+                type="button"
+                aria-label={t.buttons.share}
+                onClick={handleShareContent}
+              >
+                {t.buttons.share}
+              </Button>
+
+              <Button
+                type="button"
+                aria-label={t.buttons.download}
+                disabled={isDownloading}
+                loading={isDownloading}
+                onClick={() =>
+                  handleDownloadFile({
+                    url: generatedMeme,
+                    name: template.name,
+                  })
+                }
+              >
+                <Sparkles>{t.buttons.download}</Sparkles>
+              </Button>
+            </Container>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {!generatedMeme && (
+            <Container variant="full">
+              <S.TitleWrap>
+                <S.Heading>{t.heading.pick_a_meme}</S.Heading>
+
+                {isFetching && (
+                  <Loading icon={ClipLoader} size={25} color={color.loading} />
+                )}
+              </S.TitleWrap>
+
+              <Carousel
+                templates={data}
+                onSeletedTemplate={handleSelectTemplate}
+              />
+
+              {template && (
+                <motion.form variants={FORM_ANIMATION} onSubmit={handleSubmit}>
+                  <S.Heading>{t.heading.customize_your_own}</S.Heading>
+
+                  {new Array(template.box_count).fill('').map((_, index) => (
+                    <S.Input
+                      key={String(Math.random())}
+                      placeholder={`${t.fields.placeholder} #${index + 1}`}
+                      onChange={e => handleInputChange(e, index)}
+                    />
+                  ))}
+
+                  <Button
+                    type="submit"
+                    aria-label={t.buttons.generate}
+                    loading={isCaptioning}
+                    disabled={isCaptioning}
+                  >
+                    {t.buttons.generate}
+                  </Button>
+                </motion.form>
+              )}
+            </Container>
+          )}
+        </AnimatePresence>
       </S.Wrapper>
     </>
   );

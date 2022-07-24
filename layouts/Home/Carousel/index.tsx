@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { Image } from 'components/Base/Image';
+import { DEFAULT_TRANSITION } from 'constants/transitions';
 
+import { SLIDE_ANIMATION } from './animations';
 import { CarouselProps } from './types';
 import * as S from './styles';
 
@@ -15,12 +17,18 @@ export function Carousel({ templates, onSeletedTemplate }: CarouselProps) {
   }, []);
 
   return (
-    <S.Wrapper ref={carouselRef}>
-      <S.Carousel drag="x" dragConstraints={{ right: 0, left: -width }}>
+    <S.AnimetedContainer ref={carouselRef}>
+      <S.AnimetedCarousel drag="x" dragConstraints={{ right: 0, left: -width }}>
         {templates.map(template => (
-          <S.Slide
+          <S.AnimetedSlide
             key={template.id}
             layoutId={template.id}
+            variants={SLIDE_ANIMATION}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            whileHover={{ y: -2, transition: DEFAULT_TRANSITION }}
+            whileTap={{ y: 2, transition: DEFAULT_TRANSITION }}
             onClick={() => onSeletedTemplate(template)}
           >
             <Image
@@ -34,9 +42,9 @@ export function Carousel({ templates, onSeletedTemplate }: CarouselProps) {
               objectFit="cover"
               className="template"
             />
-          </S.Slide>
+          </S.AnimetedSlide>
         ))}
-      </S.Carousel>
-    </S.Wrapper>
+      </S.AnimetedCarousel>
+    </S.AnimetedContainer>
   );
 }

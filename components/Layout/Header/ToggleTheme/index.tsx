@@ -10,6 +10,7 @@ import { useI18nState } from 'contexts/i18n/I18Context';
 import switchOnSound from 'public/sounds/switch-on.mp3';
 import switchOffSound from 'public/sounds/switch-off.mp3';
 
+import { CONTAINER_ANIMATION } from './animations';
 import * as S from './styles';
 
 export function ToggleTheme() {
@@ -43,10 +44,15 @@ export function ToggleTheme() {
   );
 
   return (
-    <S.Button onClick={handleClick} title={iconTitle} aria-label={iconTitle}>
+    <S.AnimetedContainer
+      variants={CONTAINER_ANIMATION}
+      onClick={handleClick}
+      title={iconTitle}
+      aria-label={iconTitle}
+    >
       <IconContext.Provider value={iconContextProviderValue}>
         {isDarkMode ? <MdModeNight /> : <MdLightMode />}
       </IconContext.Provider>
-    </S.Button>
+    </S.AnimetedContainer>
   );
 }

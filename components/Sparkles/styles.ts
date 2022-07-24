@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.strong`
+export const Container = styled.span`
+  display: inline-block;
+  position: relative;
+  width: inherit;
+`;
+
+export const Wrap = styled.strong`
   position: relative;
   z-index: 1;
-  font-weight: bold;
+  font-weight: 500;
 `;

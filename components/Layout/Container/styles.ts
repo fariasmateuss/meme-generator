@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 import { ContainerProps } from './types';
@@ -16,7 +17,7 @@ const variants = {
   `,
 };
 
-export const Wrapper = styled.div<ContainerProps>`
+export const AnimatedContainer = styled(motion.div)<ContainerProps>`
   ${({ theme, variant, background }) => css`
     max-width: 35rem;
     padding: 1.25rem;
