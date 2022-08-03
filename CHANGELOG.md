@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/fariasmateuss/meme-generator/compare/v1.5.0...v1.6.0) (2022-08-03)
+
+
+### Bug Fixes
+
+* **build:** remove swcMinify property at next.config.js ([a5d8473](https://github.com/fariasmateuss/meme-generator/commit/a5d847337ed06a9ce7330c2e57a1b02a6855c596))
+
+
+### Features
+
+* animate layout with framer motion ([f4e5298](https://github.com/fariasmateuss/meme-generator/commit/f4e52988af12bf33d593700e8f658bff4bc26b47))
+
 # [1.5.0](https://github.com/fariasmateuss/meme-generator/compare/v1.4.0...v1.5.0) (2022-05-27)
 
 ### Features
