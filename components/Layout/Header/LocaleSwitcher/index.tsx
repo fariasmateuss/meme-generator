@@ -4,7 +4,6 @@ import useSound from 'use-sound';
 
 import menuOpenSound from 'public/sounds/menu-open.mp3';
 
-import { CONTAINER_ANIMATION, ITEM_ANIMATION } from './animations';
 import * as S from './styles';
 
 export function LocaleSwitcher() {
@@ -26,18 +25,13 @@ export function LocaleSwitcher() {
   };
 
   return (
-    <S.AnimetedContainer
-      variants={CONTAINER_ANIMATION}
+    <S.Container
       onChange={changeLanguage}
       onClick={handleClick}
       defaultValue={locale}
     >
-      <S.AnimetedOption variants={ITEM_ANIMATION} value="en">
-        EN
-      </S.AnimetedOption>
-      <S.AnimetedOption variants={ITEM_ANIMATION} value="pt">
-        PT
-      </S.AnimetedOption>
-    </S.AnimetedContainer>
+      <option value="en">EN</option>
+      <option value="pt">PT</option>
+    </S.Container>
   );
 }

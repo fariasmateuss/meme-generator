@@ -9,8 +9,9 @@ import { Button } from 'components/Base/Button';
 import { Sparkles } from 'components/Sparkles';
 import { Header } from 'components/Layout/Header';
 import { Container } from 'components/Layout/Container';
-import { Loading } from 'components/Loading';
 import { Image } from 'components/Base/Image';
+import { Loading } from 'components/Loading';
+import { Carousel } from 'components/Carousel';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import { useToastsDispatch } from 'contexts/toasts/ToastsContext';
 import { useCaptionMeme } from 'hooks/useCaptionMeme';
@@ -20,7 +21,6 @@ import { useShare } from 'hooks/useShare';
 import { links } from 'constants/links';
 import { Template } from 'shared/apiSchema';
 
-import { Carousel } from './Carousel';
 import { FORM_ANIMATION } from './animations';
 import { HomeProps, Box, DownloadFile } from './types';
 import * as S from './styles';
