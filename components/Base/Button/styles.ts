@@ -7,9 +7,9 @@ export const Button = styled.button`
   justify-content: center;
   width: 100%;
   height: 2.4rem;
-  font-size: 0.875rem;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
   border-radius: 10px;
   ${({ theme }) =>
     css`
@@ -18,10 +18,6 @@ export const Button = styled.button`
     `};
 
   transition: background-color 200ms;
-
-  &:hover {
-    background-color: ${({ theme }) => shade(0.2, theme.button.background)};
-  }
 
   &:not(:last-child) {
     margin: 0.68rem 0;

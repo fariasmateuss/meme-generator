@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Button = styled.button`
+export const AnimetedContainer = styled(motion.button)`
   background: transparent;
   width: 2.25rem;
   height: 2.25rem;

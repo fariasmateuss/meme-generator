@@ -3,17 +3,22 @@ import useSound from 'use-sound';
 import { MdLightMode, MdModeNight } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
+import { useTheme } from 'styled-components';
+
 import { useThemeDispatch, useThemeState } from 'contexts/theme/ThemeContext';
 import { useI18nState } from 'contexts/i18n/I18Context';
 import switchOnSound from 'public/sounds/switch-on.mp3';
 import switchOffSound from 'public/sounds/switch-off.mp3';
 
-import * as S from 'styles/components/ToggleTheme';
+import { CONTAINER_ANIMATION } from './animations';
+import * as S from './styles';
 
 export function ToggleTheme() {
   const { onSelectMode } = useThemeDispatch();
   const { mode } = useThemeState();
   const { t } = useI18nState();
+
+  const theme = useTheme();
 
   const isDarkMode = mode === 'dark';
 
@@ -21,9 +26,7 @@ export function ToggleTheme() {
     ? t.actions.theme.activate_light_mode
     : t.actions.theme.activate_dark_mode;
 
-  const iconColor = isDarkMode
-    ? 'var(--night-mode-color)'
-    : 'var(--light-mode-color)';
+  const iconColor = theme.toggleMode;
 
   const [play] = useSound(isDarkMode ? switchOnSound : switchOffSound);
 
@@ -41,10 +44,15 @@ export function ToggleTheme() {
   );
 
   return (
-    <S.Button onClick={handleClick} title={iconTitle} aria-label={iconTitle}>
+    <S.AnimetedContainer
+      variants={CONTAINER_ANIMATION}
+      onClick={handleClick}
+      title={iconTitle}
+      aria-label={iconTitle}
+    >
       <IconContext.Provider value={iconContextProviderValue}>
         {isDarkMode ? <MdModeNight /> : <MdLightMode />}
       </IconContext.Provider>
-    </S.Button>
+    </S.AnimetedContainer>
   );
 }

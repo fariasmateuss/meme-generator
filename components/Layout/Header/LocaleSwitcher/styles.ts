@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const Select = styled.select`
+export const Container = styled.select`
   background-color: transparent;
   border: none;
   color: ${({ theme }) => theme.alto};
+`;
 
-  option {
-    background-color: transparent;
-  }
+export const AnimetedOption = styled.option`
+  background: transparent;
 `;

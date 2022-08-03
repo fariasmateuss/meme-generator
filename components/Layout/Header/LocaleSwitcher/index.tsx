@@ -4,7 +4,7 @@ import useSound from 'use-sound';
 
 import menuOpenSound from 'public/sounds/menu-open.mp3';
 
-import * as S from 'styles/components/LocaleSwitcher';
+import * as S from './styles';
 
 export function LocaleSwitcher() {
   const router = useRouter();
@@ -25,13 +25,13 @@ export function LocaleSwitcher() {
   };
 
   return (
-    <S.Select
+    <S.Container
       onChange={changeLanguage}
       onClick={handleClick}
       defaultValue={locale}
     >
       <option value="en">EN</option>
       <option value="pt">PT</option>
-    </S.Select>
+    </S.Container>
   );
 }

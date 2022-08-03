@@ -8,7 +8,7 @@ import { Theme } from './types';
 
 const QUERY = '(prefers-color-scheme: light)';
 
-export function ThemeContainer({ children }: PropsWithChildren<unknown>) {
+export function ThemeProvider({ children }: PropsWithChildren<unknown>) {
   const [mode, setMode] = usePersistedState<Theme>(THEME_STORAGE_KEY, 'light');
 
   const onSelectMode = useCallback((mode: Theme) => {

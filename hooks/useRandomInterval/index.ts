@@ -2,11 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { random } from 'utils/random';
 
-type Props = {
-  callback: () => void;
-  minDelay: number;
-  maxDelay: number;
-};
+import { Props } from './types';
 
 export function useRandomInterval({ callback, minDelay, maxDelay }: Props) {
   const timeoutId = useRef(null);

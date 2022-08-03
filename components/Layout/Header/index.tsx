@@ -1,13 +1,18 @@
-import { LocaleSwitcher } from 'components/LocaleSwitcher';
-import { ToggleTheme } from 'components/ToggleTheme';
+import { LocaleSwitcher } from './LocaleSwitcher';
+import { ToggleTheme } from './ToggleTheme';
 
-import * as S from 'styles/components/Layout/Header';
+import { CONTAINER_ANIMATION } from './animations';
+import * as S from './styles';
 
 export function Header() {
   return (
-    <S.Wrapper>
+    <S.AnimatedContainer
+      variants={CONTAINER_ANIMATION}
+      initial="unMounted"
+      animate="mounted"
+    >
       <LocaleSwitcher />
       <ToggleTheme />
-    </S.Wrapper>
+    </S.AnimatedContainer>
   );
 }
